@@ -1,0 +1,2 @@
+# indoctrinate
+Documentation Scaffolding Subsystem
