@@ -1,0 +1,16 @@
+{
+	"Product": "Indoctrinate",
+	"Version": "1.0.0",
+
+	"Command": "indoctrinate", 
+	"Description": "Compile your documentation.",
+
+	"ProgramConfigurationFileName": ".indoctrinate.config.json",
+
+	"DefaultProgramConfiguration":
+		{
+		},
+
+	"AutoGatherProgramConfiguration": true,
+	"AutoAddConfigurationExplanationCommand": true
+}

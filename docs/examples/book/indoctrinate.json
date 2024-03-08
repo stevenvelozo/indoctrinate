@@ -1,0 +1,98 @@
+{
+	"Configuration": 
+		{
+			"RelativeRoot": "__CWD__",
+			"OutputRoot": "__RELATIVEROOT__/dist/indoctrinate",
+			"StageRoot": "__RELATIVEROOT__/stage/indoctrinate"
+		},
+
+	"Inputs": [
+		{
+			"Ingestor": "Raw",
+			
+			"Path": "/Some/Madeup/Path/If/We/Want/One",
+			"Name": "Some_Madeup_Name_If_We_Want_One-001.md",
+
+			"Content": "The utf-8 representation of the content in the format listed above."
+		},
+		{
+			"Ingestor": "Raw",
+			
+			"Path": "/frontmatter/legal/",
+			"Name": "ContentLicense.md",
+
+			"Content": "Content is released under general public license."
+		},
+		{
+			"Ingestor": "File",
+			"Address": "./Foreward.md"
+		},
+		{
+			"Ingestor": "RecursiveFolderScan",
+
+			"Path": "./introduction/"
+		},
+		{
+			"Ingestor": "RecursiveFolderScan",
+
+			"Path": "./chapters/"
+		}
+	],
+
+	"Outputs": [
+		{
+			"Format": "LatexBook",
+
+			"Title": "The Cool Test Book",
+
+			"Outputs": ["RAW", "JSON", "Text", "HTML", "HTML-Multipage", "Markdown", "Markdown-Multipage", "LaTeX"],
+
+			"Parts": [
+				{
+					"Hash": "TitlePage",
+					"Type": "Basic",
+
+					"Title": "The Cool Test Book",
+
+					"ContentFilters": [
+						{ "FilterType": "LabelsContain", "FilterData": { "Scope": "NAME", "Exact":true, "Contains": "titlepage" }}
+					]
+				},
+				{
+					"Hash": "Legal Front Matter",
+					"Type": "Basic",
+
+					"Title": "",
+
+					"ContentFilters": [
+						{ "FilterType": "ForwardMatchingLabelSet", "FilterData": { "Scope": "PATH", "CaseSensitive":false, "Set": ["frontmatter","legal"] }}
+					]
+				},
+				{
+					"Hash": "Table Of Contents",
+					"Type": "ToC"
+				},
+				{
+					"Hash": "Chapters",
+					"Type": "Basic",
+
+					"ContentFilters": [
+						{ "FilterType": "HierarchalLabelContainerSet", "FilterData": { "Scope": "PATH", "CaseSensitive":false, "Set": ["chapters"] }}
+					]
+				},
+				{
+					"Hash": "Vocabulary",
+					"Type": "Vocabulary"
+				},
+				{
+					"Hash": "Index",
+					"Type": "Index"
+				},
+				{
+					"Hash": "Glossary",
+					"Type": "Glossary"
+				}
+			]
+		}
+	]
+}

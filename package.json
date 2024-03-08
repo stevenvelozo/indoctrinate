@@ -1,0 +1,54 @@
+{
+    "name": "indoctrinate",
+    "version": "1.0.0",
+    "description": "Documentation generation and indoctrination.",
+    "main": "source/Indoctrinate.js",
+    "directories": {
+        "doc": "docs",
+        "test": "test"
+    },
+    "scripts": {
+        "start": "node source/Indoctrinate.js",
+        "test": "npx mocha -u tdd -R spec",
+        "tests": "npx mocha -u tdd --exit -R spec --grep",
+        "coverage": "npx nyc --reporter=lcov --reporter=text-lcov npx mocha -- -u tdd -R spec",
+        "build": "npx quack build",
+        "docker-dev-build": "docker build ./ -f Dockerfile_LUXURYCode -t indoctrinate-image:local",
+        "docker-dev-run": "docker run -it -d --name indoctrinate-dev -p 34775:8080 -p 28545:8086 -v \"$PWD/.config:/home/coder/.config\"  -v \"$PWD:/home/coder/indoctrinate\" -u \"$(id -u):$(id -g)\" -e \"DOCKER_USER=$USER\" indoctrinate-image:local",
+        "docker-dev-shell": "docker exec -it indoctrinate-dev /bin/bash"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/stevenvelozo/indoctrinate.git"
+    },
+    "keywords": [
+        "documentation"
+    ],
+    "author": "steven velozo <steven@velozo.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/stevenvelozo/indoctrinate/issues"
+    },
+    "homepage": "https://github.com/stevenvelozo/indoctrinate#readme",
+    "mocha": {
+        "diff": true,
+        "extension": [
+            "js"
+        ],
+        "package": "./package.json",
+        "reporter": "spec",
+        "slow": "75",
+        "timeout": "5000",
+        "ui": "tdd",
+        "watch-files": [
+            "source/**/*.js",
+            "test/**/*.js"
+        ],
+        "watch-ignore": [
+            "lib/vendor"
+        ]
+    },
+    "dependencies": {
+        "pict-service-commandlineutility": "^1.0.11"
+    }
+}
