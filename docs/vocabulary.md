@@ -40,20 +40,34 @@ The definition of Section shape and Source Material for how a particular Output 
 * index
 * glossary
 
- ### Example: The structure of interactive documentation for a software code repository
+### Example: The structure of interactive documentation for a software code repository
  
 * navigation (table of contents)
 * quick start
 * tutorials
-* architectural design documentation
+* data model design documentation
+* software architectural design documentation
 * api reference
 * examples
 * a searchable index
 
+### Example: The structure of a typical solution plan
+
+* navigation (table of contents)
+* executive summary
+* solution contacts
+* project work summary
+* business problem description
+* technical architecture
+* technical glossary
+* change log
+
 ## Format
 
-There may be multiple Formats we want for an Output.  We may want a HTML, LaTeX and raw text output of the same Structure for our book.  Or maybe we have an open source C++ library that needs interactive documentation as well as a PDF output.  Formats are these different target types.
+There may be multiple Formats we want for an Output.  And there are many formats we can input.
+
+For writing out, we may want all three of HTML, LaTeX and raw text output for the same structure of our book.  Or maybe we have an open source C++ library that needs interactive documentation as well as a PDF output.  Formats are these different target types.
 
 ## Output Material
 
-Our Source Material is passed through a Structure, then generated as Output Material.
+Our source material is passed through a structure, then generated as output material.

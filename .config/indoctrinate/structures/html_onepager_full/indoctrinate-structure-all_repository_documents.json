@@ -1,0 +1,159 @@
+{
+	"Hash": "all_repository_documents",
+
+	"Title": "Indoctrinate Stand-Alone HTML Documentation",
+
+	"Parts": [
+		{
+			"Title": "Introduction",
+			"GeneratedContentFormatter": "BasicContent",
+			"SourceContentType": "MarkdownContent",
+			"Filters": [
+				{
+					"ForwardLabelMatch": ["headlight_model", "docs", "customer_datadictionary_document_introduction"]
+				}]
+		},
+
+		{
+			"Title": "Abstract Entities",
+			"GeneratedContentFormatter": "BasicContent",
+			"SourceContentType": "MarkdownContent",
+			"PartLatexPrefix": "\n\\pagebreak\n",
+			"Filters": [
+				{
+					"ForwardLabelMatch": ["headlight_model", "docs", "abstract_entity_schemas"]
+				}]
+		},
+
+		{
+			"Title": "Tables",
+			"GeneratedContentFormatter": "MeadowTableGroups",
+			"SourceContentType": "MeadowSchema",
+			"SectionLatexPrefix": "\n\\pagebreak\n",
+			"TableLatexConnector": "\n\\pagebreak\n",
+			"Filters": [
+				{
+					"ForwardLabelMatch": ["headlight_model", "docs", "entity"]
+				}]
+		},
+
+		{
+			"Title": "Example Queries",
+			"GeneratedContentFormatter": "BasicContent-Pagebreaks",
+			"SourceContentType": "MarkdownContent",
+			"Filters": [
+				{
+					"ForwardLabelMatch": ["headlight_model", "docs", "example_queries"]
+				}]
+		}],
+
+	"MeadowEntityCategories":
+	{
+		"Customer": { "Group": "System" },
+		"User": { "Group": "System" },
+		"Role": { "Group": "System" },
+
+		"PayItem": { "Group": "Master Lists" },
+		"Material": { "Group": "Master Lists" },
+		"Equipment": { "Group": "Master Lists" },
+		"Product": { "Group": "Master Lists" },
+
+		"MixDesign": { "Group": "Mix Designs" },
+		"MixDesignApproval": { "Group": "Mix Designs" },
+		"MixSpecification": { "Group": "Mix Designs" },
+		"MixSpecificationMaterialJoin": { "Group": "Mix Designs" },
+		"PlantMixApproval": { "Group": "Mix Designs" },
+		"ProductionPlant": { "Group": "Mix Designs" },
+
+		"Observation": { "Group": "Observations" },
+		"Artifact": { "Group": "Observations" },
+		"ObservationArtifactJoin": { "Group": "Observations" },
+		"ObservationDocumentStatistics": { "Group": "Observations" },
+
+		"ObservationTagJoin": { "Group": "Observations" },
+		"ObservationTagProjectJoin": { "Group": "Observations" },
+
+		"Document": { "Group": "Forms and Reports" },
+		"DocumentPolyJoin": { "Group": "Forms and Reports" },
+		"DocumentApprovalLog": { "Group": "Forms and Reports" },
+		"DocumentObservationJoin": { "Group": "Forms and Reports" },
+		"DocumentElectronicSignatureJoin": { "Group": "Forms and Reports" },
+
+		"Comment": { "Group": "Approvals and Discussions" },
+		"DocumentCommentJoin": { "Group": "Approvals and Discussions" },
+		"ElectronicSignature": { "Group": "Approvals and Discussions" },
+		"ElectronicSignatureCommentJoin": { "Group": "Approvals and Discussions" },
+
+		"Organization": { "Group": "Contractors" },
+		"OrganizationAddress": { "Group": "Contractors" },
+		"Contact": { "Group": "Contractors" },
+		"ContactOrganizationJoin": { "Group": "Contractors" },
+		"OrganizationMaterialJoin": { "Group": "Contractors" },
+		"EquipmentOrganizationJoin": { "Group": "Contractors" },
+		"BidItemOrganizationJoin": { "Group": "Contractors" },
+		"LineItemOrganizationJoin": { "Group": "Contractors" },
+
+		"TestSpecificationSet": { "Group": "Materials Master List" },
+		"Test": { "Group": "Materials Master List" },
+		"TestSpecificationSetTestJoin": { "Group": "Materials Master List" },
+		"TestSpecification": { "Group": "Materials Master List" },
+		"TestSpecificationMaterialTestJoin": { "Group": "Materials Master List" },
+
+		"Lab": { "Group": "Materials Oversight" },
+		"LabUserJoin": { "Group": "Materials Oversight" },
+		"TestLabJoin": { "Group": "Materials Oversight" },
+		"LabTestDefault": { "Group": "Materials Oversight" },
+		"LabUserMaterialJoin": { "Group": "Materials Oversight" },
+		"LabMaterialAssignment": { "Group": "Materials Oversight" },
+
+		"Sample": { "Group": "Materials Sampling" },
+		"SampleLog": { "Group": "Materials Sampling" },
+		"SampleLabJoin": { "Group": "Materials Sampling" },
+		"SampleLineItemJoin": { "Group": "Materials Sampling" },
+
+		"ProjectLineItemMaterialTest": { "Group": "Master Sample Plan" },
+		"MaterialLineItemJoin": { "Group": "Master Sample Plan" },
+		"MaterialPayItemJoin": { "Group": "Master Sample Plan" },
+
+		"Lot": { "Group": "Materials Field Tracking" },
+		"SubLot": { "Group": "Materials Field Tracking" },
+		"Core": { "Group": "Materials Field Tracking" },
+		"CoreResult": { "Group": "Materials Field Tracking" },
+
+		"Stockpile": { "Group": "Materials Field Tracking" },
+		"StockpileProjectJoin": { "Group": "Materials Field Tracking" },
+
+		"TestInstance": { "Group": "Materials Testing" },
+		"TestInstanceDocumentJoin": { "Group": "Materials Testing" },
+		"TestInstanceLabJoin": { "Group": "Materials Testing" },
+
+		"Contract": { "Group": "Contract Administration" },
+		"BidItem": { "Group": "Contract Administration" },
+		"LineItem": { "Group": "Contract Administration" },
+		"LineItemChangeOrder": { "Group": "Contract Administration" },
+		"FundingSource": { "Group": "Contract Administration" },
+		"FundingSourceProjectJoin": { "Group": "Contract Administration" },
+
+		"Project": { "Group": "Project Management" },
+		"ProjectContactJoin": { "Group": "Project Management" },
+		"ProjectLabJoin": { "Group": "Project Management" },
+		"ProjectEquipmentJoin": { "Group": "Project Management" },
+		"ProjectOrganizationJoin": { "Group": "Project Management" },
+		"ProjectUserJoin": { "Group": "Project Management" },
+
+		"Certification": { "Group": "Certifications" },
+		"CertificationEntityPolyJoin": { "Group": "Certifications" },
+		"CertificationType": { "Group": "Certifications" },
+		"CertificationTypeCertifiedEntityPolyJoin": { "Group": "Certifications" },
+
+		"Account": { "Group": "Financial Service" },
+		"AccountBudget": { "Group": "Financial Service" },
+		"AccountLedger": { "Group": "Financial Service" },
+		"AccountType": { "Group": "Financial Service" },
+
+		"Payment": { "Group": "Financial Service" },
+		"PaymentEntry": { "Group": "Financial Service" },
+		"PaymentEntryFunding": { "Group": "Financial Service" },
+		"PaymentTransaction": { "Group": "Financial Service" }
+	}
+}

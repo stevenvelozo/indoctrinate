@@ -1,0 +1,29 @@
+{
+	"UUID": "cd5d7663-f93b-4a36-80b0-61b9bc37e6e5",
+	"Type": "URI",
+	"Hash": "URI~CONTENT~FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/chapters/03/000-SaltwaterFish.md",
+	"Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/chapters/03/000-SaltwaterFish.md",
+	"Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/chapters/03",
+	"Name": "000-SaltwaterFish.md",
+	"Format": "Markdown",
+	"Content": false,
+	"Labels": [
+		"__LABELSET_TYPE",
+		"FILE",
+		"__LABELSET_ADDRESS",
+		"docs",
+		"examples",
+		"book",
+		"chapters",
+		"03",
+		"__LABELSET_NAME",
+		"000",
+		"SaltwaterFish",
+		"__LABELSET_EXTENSION",
+		".md",
+		"__LABELSET_FILENAME",
+		"000-SaltwaterFish.md",
+		"__LABELSET_FULLPATH",
+		"FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/chapters/03/000-SaltwaterFish.md"
+	]
+}

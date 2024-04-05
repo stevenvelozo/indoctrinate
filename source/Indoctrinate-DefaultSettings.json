@@ -7,9 +7,12 @@
 
 	"ProgramConfigurationFileName": ".indoctrinate.config.json",
 
-	"DefaultProgramConfiguration":
-		{
-		},
+	"IgnoredFileNames": ["node_modules", ".git", ".DS_Store", ".nyc_output"],
+
+	"RootScanFolder": false,
+	"AdditionalScanFolders": [],
+
+	"TargetOutputFolder": false,
 
 	"AutoGatherProgramConfiguration": true,
 	"AutoAddConfigurationExplanationCommand": true

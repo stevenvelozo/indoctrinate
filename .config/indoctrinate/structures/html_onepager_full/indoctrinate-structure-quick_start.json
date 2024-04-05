@@ -1,0 +1,32 @@
+{
+	"Hash": "quick_start",
+
+	"Title": "Indoctrinate Quick-Start Guide",
+
+	"Parts": 
+		[
+			{
+				"Title": "Quick Start",
+
+				"Type": "MergedContent",
+
+				"Filters": 
+					[
+						{ "Type": "Label", "Labels": ["docs","quickstart"], "Sequential": true },
+						{ "Type": "Format", "Format": "Markdown" }
+					]
+			},
+
+			{
+				"Title": "License",
+
+				"Type": "FirstContent",
+
+				"Filters": 
+					[
+						{ "Type": "Label", "Labels": ["docs","license"], "Sequential": true },
+						{ "Type": "Format", "Format": "Markdown" }
+					]
+			}
+		]
+}
