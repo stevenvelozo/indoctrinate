@@ -96,7 +96,7 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 
 		this.fable.AppData.TargetFilter = (typeof(this.options.target_filter) == 'string') ? this.options.target_filter : false;
 
-		this.fable.AppData.WriteCatalogFile = (typeof(this.options.catalog_file) == 'boolean') ? this.options.catalog_file : false;
+		this.fable.AppData.WriteCatalogFile = (typeof(this.options.catalog_file) == 'boolean') ? this.options.catalog_file : true;
 
 		this.incrementProgressTracker(1);
 
@@ -109,9 +109,9 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 
 		if (this.fable.AppData.WriteCatalogFile)
 		{
-			this.trace(`Caching Catalog Application Data to ${this.AppData.StageFolderPath}/Indoctrinate-Catalog-AppData.json`);
+			this.log.trace(`Caching Catalog Application Data to ${this.fable.AppData.StageFolderPath}/Indoctrinate-Catalog-AppData.json`);
 			this.incrementProgressTracker(1);
-			this.fable.FilePersistence.writeFile(libPath.join(this.AppData.StageFolderPath, 'Indoctrinate-Catalog-AppData.json'), JSON.stringify(this.fable.AppData,null,4), fCallback);
+			this.fable.FilePersistence.writeFile(libPath.join(this.fable.AppData.StageFolderPath, 'Indoctrinate-Catalog-AppData.json'), JSON.stringify(this.fable.AppData,null,4), fCallback);
 		}
 		else
 		{
@@ -142,7 +142,7 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 		this.operation.addStep(this.prepareConfigurations, 'Preparing Configurations');
 
 		this.operation.addStep(
-			(fNext)=>
+			function (fNext)
 			{
 				this.setProgressTrackerTotalOperations(1);
 				this.fable.FilePersistence.makeFolderRecursive(this.fable.AppData.OutputFolderPath, fNext);
@@ -155,54 +155,25 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 				this.fable.FilePersistence.makeFolderRecursive(this.fable.AppData.StageFolderPath, fNext);
 			}, {}, `Creating Staging folder [${this.fable.AppData.StageFolderPath}].`);
 
-		this.operation.addStep(
-			(fNext)=>
-			{
-				this.log.info(`Indoctrination Phase 1: Gathering source content metadata....`);
-				return this.writeCatalogAppDataFile(fNext);
-			});
+		this.operation.addStep(this.writeCatalogAppDataFile, `Indoctrination Phase 1: Gathering source content metadata....`);
 
 		this.operation.addStep(this.fable.IndoctrinateServiceInput.scan.bind(this.fable.IndoctrinateServiceInput));
 		this.operation.addStep(this.fable.IndoctrinateServiceInput.scanExtraFiles.bind(this.fable.IndoctrinateServiceInput));
 
-		this.operation.addStep(
-			(fNext)=>
-			{
-				this.log.info(`Documentation Phase 2: Compiling documentation content as data....`);
-				return this.writeCatalogAppDataFile(fNext);
-			});
+		this.operation.addStep(this.writeCatalogAppDataFile, `Indoctrination Phase 1: Gathering source content metadata....`);
 
 		this.operation.addStep(this.fable.IndoctrinateServiceProcessor.processContentCatalog.bind(this.fable.IndoctrinateServiceProcessor));
 
-		this.operation.addStep(
-			(fNext)=>
-			{
-				this.log.info(`Documentation Phase 3: Generated structured content sets....`);
-				return this.writeCatalogAppDataFile(fNext);
-			});
+		this.operation.addStep(this.writeCatalogAppDataFile, `Documentation Phase 2: Compiling documentation content as data....`);
 
+		this.operation.addStep(this.writeCatalogAppDataFile, `Documentation Phase 3: Generated structured content sets....`);
 		this.operation.addStep(this.fable.IndoctrinateServiceOutput.outputTargets.bind(this.fable.IndoctrinateServiceOutput));
 
-		this.operation.addStep(
-			(fNext)=>
-			{
-				this.log.info(`Documentation Phase 4: Copying content to custom destinations....`);
-				return this.writeCatalogAppDataFile(fNext);
-			});
+		this.operation.addStep(this.writeCatalogAppDataFile, `Documentation Phase 4: Copying content to custom destinations....`);
 
-		this.operation.addStep(
-			(fNext)=>
-			{
-				this.log.info(`Documentation Phase 5: Cleanup....`);
-				return this.writeCatalogAppDataFile(fNext);
-			});
+		this.operation.addStep(this.writeCatalogAppDataFile, `Documentation Phase 5: Cleanup....`);
 
-		this.operation.addStep(
-			(fNext)=>
-			{
-				this.log.info(`Documentation Phase 6: Indoctrination is complete.`);
-				return this.writeCatalogAppDataFile(fNext);
-			});
+		this.operation.addStep(this.writeCatalogAppDataFile, `Documentation Phase 6: Indoctrination is complete.`);
 
 		return this.operation.execute(fCallback);
 	}

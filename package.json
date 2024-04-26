@@ -49,7 +49,7 @@
         ]
     },
     "dependencies": {
-        "marked": "^12.0.1",
+        "marked": "^12.0.2",
         "marked-tex-renderer": "^1.1.1",
         "pict-service-commandlineutility": "^1.0.11"
     },
