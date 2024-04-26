@@ -5,7 +5,7 @@
 */
 
 const libPict = require('pict-service-commandlineutility');
-const libIndoctrinateCompiler = require('../source/commands/Indoctrinate-Command-Compile.js');
+const libIndoctrinateCompiler = require('../source/Indoctrinate-Fable-Service.js');
 
 const _SampleContentDescriptionLarge = require('./test_data/Sample_ContentDescription_Large.json');
 

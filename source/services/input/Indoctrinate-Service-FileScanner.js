@@ -42,7 +42,7 @@ class FileScanner extends libPictServiceCommandLineUtility.ServiceProviderBase
 							{
 								if (pFileStatError)
 								{
-									return fEnumerationComplete('File stat error during enumeration:'+pEnumerationError);
+									return fEnumerationComplete('File stat error during enumeration:'+pFileStatError);
 								}
 
 
