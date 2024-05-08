@@ -202,6 +202,11 @@ class Ingestor extends libPictServiceCommandLineUtility.ServiceProviderBase
 
 			pContentDescription.Labels.push('__LABELSET_FULLPATH');
 			pContentDescription.Labels.push(pContentDescription.Path);
+
+			pContentDescription.Labels.push('__LABELSET_FORMAT');
+			pContentDescription.Labels.push(pContentDescription.Format);
+			pContentDescription.Labels.push(pContentDescription.Schema);
+
 		}
 		// TODO: teach this http, sftp, ftp, scp, kiwix (this is where those else if blocks go)
 		else
@@ -240,7 +245,10 @@ class Ingestor extends libPictServiceCommandLineUtility.ServiceProviderBase
 				"Location": this.getContentLocation(pPath, tmpType),
 				"Name": this.getContentName(pPath, tmpType),
 
+				// Format is the file format (e.g. txt, md, json, xml, html, csv, etc.)
 				"Format": this.getContentFormat(pPath, tmpType),
+				// Schema is an extra descriptor to tell us if we can expect specific content or content markers (e.g. a package.json)
+				"Schema": 'Default',
 
 				"Content": false,
 
@@ -260,17 +268,17 @@ class Ingestor extends libPictServiceCommandLineUtility.ServiceProviderBase
 		if (tmpContentDescription.Format == 'JSON')
 		{
 			// There are some JSON files which need to be loaded now, to ingest extra folders.
-			console.log(`... checking if JSON file ${tmpContentDescription.Path} is one of our special file types...`);
+			console.log(`... checking if JSON file ${tmpContentDescription.Path} is one of the special internal file types...`);
 			if (tmpContentDescription.Name == 'package.json')
 			{
 				// The node package.json files are used to automagically add some extra labels to the content during the compile phase, so pull them in.
-				tmpContentDescription.Format = 'PackageDotJSON';
+				tmpContentDescription.Schema = 'PackageDotJSON';
 				tmpContentDescription.Content = require(libPath.join(tmpContentDescription.Location, tmpContentDescription.Name));
 			}
 			if (tmpContentDescription.Name.toUpperCase().indexOf('INDOCTRINATE-EXTRAFOLDERS.JSON') == 0)
 			{
 				// The indoctrinate-extrafolders.json is a directive file that adds extra scan paths
-				tmpContentDescription.Format = 'Indoctrinate-ExtraFolders';
+				tmpContentDescription.Schema = 'Indoctrinate-ExtraFolders';
 				try
 				{
 					tmpContentDescription.Content = require(libPath.join(tmpContentDescription.Location, tmpContentDescription.Name));
@@ -299,7 +307,7 @@ class Ingestor extends libPictServiceCommandLineUtility.ServiceProviderBase
 			if (tmpContentDescription.Name.toUpperCase().indexOf('INDOCTRINATE-STRUCTURE') == 0)
 			{
 				// The indoctrinate-extrafolders.json is a directive file that adds extra scan paths
-				tmpContentDescription.Format = 'Indoctrinate-Structure';
+				tmpContentDescription.Schema = 'Indoctrinate-Structure';
 				try
 				{
 					tmpContentDescription.Content = require(libPath.join(tmpContentDescription.Location, tmpContentDescription.Name));
@@ -308,15 +316,15 @@ class Ingestor extends libPictServiceCommandLineUtility.ServiceProviderBase
 				}
 				catch (pError)
 				{
-					this.fable.log.error(`Error loading or parsing the Indoctrinate-ExtraFolders file [${tmpContentDescription.Path}]: ${pError}`);
+					this.fable.log.error(`Error loading or parsing the Indoctrinate-Structure file [${tmpContentDescription.Path}]: ${pError}`);
 				}
 			}
 
-			// If the filename starts with indoctrinate-structure and is a JSON file, it's a directive file that adds a content structure.
+			// If the filename starts with indoctrinate-target and is a JSON file, it's a directive file that adds a content target.
 			if (tmpContentDescription.Name.toUpperCase().indexOf('INDOCTRINATE-TARGET') == 0)
 			{
 				// The indoctrinate-extrafolders.json is a directive file that adds extra scan paths
-				tmpContentDescription.Format = 'Indoctrinate-Target';
+				tmpContentDescription.Schema = 'Indoctrinate-Target';
 				try
 				{
 					tmpContentDescription.Content = require(libPath.join(tmpContentDescription.Location, tmpContentDescription.Name));
@@ -325,7 +333,7 @@ class Ingestor extends libPictServiceCommandLineUtility.ServiceProviderBase
 				}
 				catch (pError)
 				{
-					this.fable.log.error(`Error loading or parsing the Indoctrinate-ExtraFolders file [${tmpContentDescription.Path}]: ${pError}`);
+					this.fable.log.error(`Error loading or parsing the Indoctrinate-Target file [${tmpContentDescription.Path}]: ${pError}`);
 				}
 			}
 		}

@@ -62,6 +62,17 @@ The definition of Section shape and Source Material for how a particular Output 
 * technical glossary
 * change log
 
+### Example: The structure of a typical zine
+
+* title page
+* table of contents
+* letter from editor
+* short article
+* graphic insert
+* long article
+* short article
+* advertisements
+
 ## Format
 
 There may be multiple Formats we want for an Output.  And there are many formats we can input.

@@ -34,24 +34,24 @@ suite
 
 						tmpPict.addServiceType('IndoctrinateCompiler', libIndoctrinateCompiler);
 
-						let tmpCompiler = tmpPict.instantiateServiceProvider('IndoctrinateCompiler');
+						// Synthesize compiler parameters in here
+						let tmpRunDate = tmpPict.Dates.dayJS().format(`YYYY-MM-DDTHH-mm-ss-SSSZZ`);
+
+						let tmpCompiler = tmpPict.instantiateServiceProvider('IndoctrinateCompiler', {
+								catalog_file: true,
+								directory_root: `${__dirname}/../`,
+								staging_folder: `${__dirname}/../dist/unit_tests/stage/indoctrinate-test-${tmpRunDate}`,
+								target_output:  `${__dirname}/../dist/unit_tests/target/indoctrinate-test-${tmpRunDate}`,
+							});
 
 						Expect(tmpCompiler).to.be.an('object', 'The compmiler should construct properly.');
-
-						// Synthesize command-line parameters in here
-						let tmpRunDate = tmpPict.Dates.dayJS().format(`YYYY-MM-DDTHH-mm-ss-SSSZZ`);
-						tmpCompiler.CommandOptions = (
-							{
-								catalog_file: false,
-								//directory_root: `${__dirname}/dist/indoctrinate-test-${tmpRunDate}`
-							});
 
 						tmpCompiler.compileContent(
 							() =>
 							{
 								Expect(tmpCompiler.fable).to.have.property('IndoctrinateServiceCatalog');
 								
-								let tmpPackageJSONList = tmpCompiler.fable.IndoctrinateServiceCatalog.gatherContentByFilterSet([{Type:'Format', Format:'PackageDotJSON'}]);
+								let tmpPackageJSONList = tmpCompiler.fable.IndoctrinateServiceCatalog.gatherContentByFilterSet([{Type:'Schema', Schema:'PackageDotJSON'}]);
 								Expect(tmpPackageJSONList).to.be.an('array');
 								Expect(tmpPackageJSONList.length).to.be.greaterThan(0);
 

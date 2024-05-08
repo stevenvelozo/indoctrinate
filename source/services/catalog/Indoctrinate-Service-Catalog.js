@@ -4,6 +4,7 @@ const libPictServiceCommandLineUtility = require('pict-service-commandlineutilit
 //       Discuss first, pattern later.  Does not affect execution behavior just maintenance and dependencies.
 const libCatalogFilterBase = require('./filter/Indoctrinate-Catalog-Filter.js');
 const libCatalogFilterFormat = require('./filter/Indoctrinate-Catalog-Filter-Format.js');
+const libCatalogFilterSchema = require('./filter/Indoctrinate-Catalog-Filter-Schema.js');
 const libCatalogFilterLabel = require('./filter/Indoctrinate-Catalog-Filter-Label.js');
 
 const libCatalogLabelManager = require('./Indoctrinate-Catalog-LabelManager.js');
@@ -41,6 +42,9 @@ class IndoctrinateServiceCatalog extends libPictServiceCommandLineUtility.Servic
 
 			case 'Format':
 				return this.fable.instantiateServiceProviderFromPrototype('IndoctrinateCatalogFilter', pFilterDefinition, this.fable.getUUID(), libCatalogFilterFormat);
+	
+			case 'Schema':
+				return this.fable.instantiateServiceProviderFromPrototype('IndoctrinateCatalogFilter', pFilterDefinition, this.fable.getUUID(), libCatalogFilterSchema);
 	
 			default:
 				this.fable.log.warn(`Indoctrinate tried to create a catalog filter by type but failed due to unrecognized type:  pFilterDefinition.Type was ${pFilterDefinition.Type}`);

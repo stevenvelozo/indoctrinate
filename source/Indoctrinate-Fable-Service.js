@@ -35,20 +35,13 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 			this.fable.AppData = {};
 		}
 
-		this.operation = this.fable.instantiateServiceProvider('Operation',
-			{
-				Name: 'Indoctrinate Content Compilation and Transformation'
-			})
-
-		this.fable.AppData.Operation = this.operation.state;
+		this.fable.AppData;
 
 		this.log.info('Constructed the Indoctrinate Fable Service.');
 	}
 
 	prepareConfigurations(fCallback)
 	{
-		this.setProgressTrackerTotalOperations(1);
-
 		// On the code flow diagram this is the "Source" box
 				// If there is a root folder command-line parameter, use that
 		this.fable.AppData.RootFolder = (typeof(this.options.directory_root) == 'string') ? this.options.directory_root
@@ -98,32 +91,36 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 
 		this.fable.AppData.WriteCatalogFile = (typeof(this.options.catalog_file) == 'boolean') ? this.options.catalog_file : true;
 
-		this.incrementProgressTracker(1);
-
 		return fCallback();
 	}
 
 	writeCatalogAppDataFile(fCallback)
 	{
-		this.setProgressTrackerTotalOperations(1);
-
 		if (this.fable.AppData.WriteCatalogFile)
 		{
 			this.log.trace(`Caching Catalog Application Data to ${this.fable.AppData.StageFolderPath}/Indoctrinate-Catalog-AppData.json`);
-			this.incrementProgressTracker(1);
 			this.fable.FilePersistence.writeFile(libPath.join(this.fable.AppData.StageFolderPath, 'Indoctrinate-Catalog-AppData.json'), JSON.stringify(this.fable.AppData,null,4), fCallback);
 		}
 		else
 		{
-			this.incrementProgressTracker(1);
 			return fCallback();
 		}
 	}
 
-	compileContent(fCallback)
+	beginPhase(pAnticipate, pPhaseBeginMessage)
 	{
-		this.operation.info(`Indoctrination compiler warming up...`);
+		pAnticipate.anticipate(this.writeCatalogAppDataFile.bind(this));
+		pAnticipate.anticipate(
+			function (fNext)
+			{
+				this.log.info(pPhaseBeginMessage);
+				return fNext();
+			}.bind(this));
+	}
 
+	initializeServiceProviders(fCallback)
+	{
+		this.log.info('Instantiating required fable services...')
 		// Get the extraneous services up and ready to go
 		this.fable.serviceManager.instantiateServiceProvider('FilePersistence');
 
@@ -135,47 +132,67 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 		this.fable.serviceManager.instantiateServiceProvider('IndoctrinateServiceInput');
 		this.fable.serviceManager.instantiateServiceProvider('IndoctrinateServiceProcessor');
 		this.fable.serviceManager.instantiateServiceProvider('IndoctrinateServiceOutput');
+		this.log.info('...fable services instantiated.')
 
+		return fCallback();
+	}
 
-		this.operation.addStep(this.writeCatalogAppDataFile, 'Indoctrination Phase 0: Perparation');
+	prepareDestinationFolder(fCallback)
+	{
+		this.log.info(`Creating Target Output (Destination) folder [${this.fable.AppData.OutputFolderPath}].`);
+		this.fable.FilePersistence.makeFolderRecursive(this.fable.AppData.OutputFolderPath, fCallback);
+	}
 
-		this.operation.addStep(this.prepareConfigurations, 'Preparing Configurations');
+	prepareStagingFolder(fCallback)
+	{
+		this.log.info(`Creating Staging folder [${this.fable.AppData.StageFolderPath}].`);
+		this.fable.FilePersistence.makeFolderRecursive(this.fable.AppData.StageFolderPath, fCallback);
+	}
 
-		this.operation.addStep(
+	endPhase(pAnticipate, pPhaseEndMessage)
+	{
+		pAnticipate.anticipate(this.writeCatalogAppDataFile.bind(this));
+		pAnticipate.anticipate(
 			function (fNext)
 			{
-				this.setProgressTrackerTotalOperations(1);
-				this.fable.FilePersistence.makeFolderRecursive(this.fable.AppData.OutputFolderPath, fNext);
-				this.incrementProgressTracker(1);
-			}, {}, `Creating Target Output (Destination) folder [${this.fable.AppData.OutputFolderPath}].`);
+				this.log.info(pPhaseEndMessage);
+				return fNext();
+			}.bind(this));
+	}
 
-		this.operation.addStep(
-			(fNext)=>
-			{
-				this.fable.FilePersistence.makeFolderRecursive(this.fable.AppData.StageFolderPath, fNext);
-			}, {}, `Creating Staging folder [${this.fable.AppData.StageFolderPath}].`);
+	compileContent(fCallback)
+	{
+		let tmpAnticipate = this.fable.newAnticipate();
 
-		this.operation.addStep(this.writeCatalogAppDataFile, `Indoctrination Phase 1: Gathering source content metadata....`);
+		this.beginPhase(tmpAnticipate, 'Indoctrination Phase 0: Compilation Environment Preparation');
+		tmpAnticipate.anticipate(this.initializeServiceProviders.bind(this));
+		tmpAnticipate.anticipate(this.prepareConfigurations.bind(this));
+		tmpAnticipate.anticipate(this.prepareDestinationFolder.bind(this));
+		tmpAnticipate.anticipate(this.prepareStagingFolder.bind(this));
+		this.endPhase(tmpAnticipate, 'Preparation [Phase 0] Completed');
 
-		this.operation.addStep(this.fable.IndoctrinateServiceInput.scan.bind(this.fable.IndoctrinateServiceInput));
-		this.operation.addStep(this.fable.IndoctrinateServiceInput.scanExtraFiles.bind(this.fable.IndoctrinateServiceInput));
+		this.beginPhase(tmpAnticipate, `Indoctrination Phase 1: Cataloging Source Content Metadata`);
+		tmpAnticipate.anticipate(this.fable.IndoctrinateServiceInput.scan.bind(this.fable.IndoctrinateServiceInput));
+		// This is done in two steps because the first scan can find extra folders that we may want to scan
+		tmpAnticipate.anticipate(this.fable.IndoctrinateServiceInput.scanExtraFiles.bind(this.fable.IndoctrinateServiceInput));
+		this.endPhase(tmpAnticipate, 'Cataloging [Phase 1] Completed');
 
-		this.operation.addStep(this.writeCatalogAppDataFile, `Indoctrination Phase 1: Gathering source content metadata....`);
+		this.beginPhase(tmpAnticipate, `Indoctrination Phase 2: Processing Source Content Files`);
+		tmpAnticipate.anticipate(this.fable.IndoctrinateServiceProcessor.processContentCatalog.bind(this.fable.IndoctrinateServiceProcessor));
+		this.endPhase(tmpAnticipate, 'Processing [Phase 2] Completed');
 
-		this.operation.addStep(this.fable.IndoctrinateServiceProcessor.processContentCatalog.bind(this.fable.IndoctrinateServiceProcessor));
 
-		this.operation.addStep(this.writeCatalogAppDataFile, `Documentation Phase 2: Compiling documentation content as data....`);
+		this.beginPhase(tmpAnticipate, `Documentation Phase 3: Generating Structured Content`);
+		tmpAnticipate.anticipate(this.fable.IndoctrinateServiceOutput.outputTargets.bind(this.fable.IndoctrinateServiceOutput));
+		this.endPhase(tmpAnticipate, 'Generation [Phase 3] Completed');
 
-		this.operation.addStep(this.writeCatalogAppDataFile, `Documentation Phase 3: Generated structured content sets....`);
-		this.operation.addStep(this.fable.IndoctrinateServiceOutput.outputTargets.bind(this.fable.IndoctrinateServiceOutput));
+		this.beginPhase(tmpAnticipate, `Documentation Phase 4: Copying Content to Destination`);
+		this.endPhase(tmpAnticipate, 'Copying [Phase 4] Completed');
 
-		this.operation.addStep(this.writeCatalogAppDataFile, `Documentation Phase 4: Copying content to custom destinations....`);
+		this.beginPhase(tmpAnticipate, `Documentation Phase 5: Cleanup....`);
+		this.endPhase(tmpAnticipate, 'Cleanup [Phase 5] Completed');
 
-		this.operation.addStep(this.writeCatalogAppDataFile, `Documentation Phase 5: Cleanup....`);
-
-		this.operation.addStep(this.writeCatalogAppDataFile, `Documentation Phase 6: Indoctrination is complete.`);
-
-		return this.operation.execute(fCallback);
+		return tmpAnticipate.wait(fCallback);
 	}
 }
 
