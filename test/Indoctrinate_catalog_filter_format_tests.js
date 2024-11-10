@@ -48,7 +48,7 @@ suite
 					'The Format Filter should match the Markdown format properly',
 					()=>
 					{
-						let tmpFormatFilter = new libIndoctrinateCatalogFormatFilter({Format: 'Markdown'});
+						let tmpFormatFilter = new libIndoctrinateCatalogFormatFilter({Format: 'markdown'});
 						let tmpMatched = tmpFormatFilter.matchContent(_SampleContentDescriptionLarge);
 						Expect(tmpMatched).to.equal(true, 'The format filter should match properly.');
 					}
@@ -58,7 +58,7 @@ suite
 					'The Format Filter should not match the JSON format properly',
 					()=>
 					{
-						let tmpFormatFilter = new libIndoctrinateCatalogFormatFilter({Format: 'JSON'});
+						let tmpFormatFilter = new libIndoctrinateCatalogFormatFilter({Format: 'json'});
 						let tmpMatched = tmpFormatFilter.matchContent(_SampleContentDescriptionLarge);
 						Expect(tmpMatched).to.equal(false, 'The format filter should match properly.');
 					}
@@ -68,7 +68,7 @@ suite
 					'Case sensitivity should work',
 					()=>
 					{
-						let tmpFormatFilter = new libIndoctrinateCatalogFormatFilter({Format: 'markdown', CaseSensitive: true});
+						let tmpFormatFilter = new libIndoctrinateCatalogFormatFilter({Format: 'markDown', CaseSensitive: true});
 						let tmpMatched = tmpFormatFilter.matchContent(_SampleContentDescriptionLarge);
 						Expect(tmpMatched).to.equal(false, 'The format filter should match properly.');
 					}
@@ -78,7 +78,7 @@ suite
 					'Case sensitivity should work when matching',
 					()=>
 					{
-						let tmpFormatFilter = new libIndoctrinateCatalogFormatFilter({Format: 'Markdown', CaseSensitive: true});
+						let tmpFormatFilter = new libIndoctrinateCatalogFormatFilter({Format: 'markdown', CaseSensitive: true});
 						let tmpMatched = tmpFormatFilter.matchContent(_SampleContentDescriptionLarge);
 						Expect(tmpMatched).to.equal(true, 'The format filter should match properly.');
 					}
@@ -95,10 +95,10 @@ suite
 				);
 				test
 				(
-					'Arrays of formats should work',
+					'Arrays of formats should work including case sensitivity',
 					()=>
 					{
-						let tmpFormatFilter = new libIndoctrinateCatalogFormatFilter({Formats: ['markdown'], CaseSensitive: true});
+						let tmpFormatFilter = new libIndoctrinateCatalogFormatFilter({Formats: ['markDown'], CaseSensitive: true});
 						let tmpMatched = tmpFormatFilter.matchContent(_SampleContentDescriptionLarge);
 						Expect(tmpMatched).to.equal(false, 'The format filter should match properly.');
 					}

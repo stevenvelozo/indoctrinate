@@ -11,7 +11,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/.config/indoctrinate/structures/html_documentation.json",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/.config/indoctrinate/structures",
             "Name": "html_documentation.json",
-            "Format": "JSON",
+            "Format": "json",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -38,7 +38,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/.vscode/launch.json",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/.vscode",
             "Name": "launch.json",
-            "Format": "JSON",
+            "Format": "json",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -62,7 +62,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/README.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate",
             "Name": "README.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -85,7 +85,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/dist/indoctrinate_content_staging/Indoctrinate-AppData.json",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/dist/indoctrinate_content_staging",
             "Name": "Indoctrinate-AppData.json",
-            "Format": "JSON",
+            "Format": "json",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -111,7 +111,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/design/labels.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/design",
             "Name": "labels.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -136,7 +136,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/design/overview.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/design",
             "Name": "overview.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -161,7 +161,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/README.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book",
             "Name": "README.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -187,7 +187,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/Vocabulary.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book",
             "Name": "Vocabulary.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -213,7 +213,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/chapters/01/000-Fish.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/chapters/01",
             "Name": "000-Fish.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -242,7 +242,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/chapters/02/000-FreshwaterFish.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/chapters/02",
             "Name": "000-FreshwaterFish.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -271,7 +271,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/chapters/02/Salmon.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/chapters/02",
             "Name": "Salmon.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -299,7 +299,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/chapters/03/000-SaltwaterFish.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/chapters/03",
             "Name": "000-SaltwaterFish.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -328,7 +328,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/chapters/04/000-FishThatWorkInBoth.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/chapters/04",
             "Name": "000-FishThatWorkInBoth.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -357,7 +357,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/chapters/05/000-FishAsFood.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/chapters/05",
             "Name": "000-FishAsFood.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -386,7 +386,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/chapters/06/000-FishAsFriends.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/chapters/06",
             "Name": "000-FishAsFriends.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -415,7 +415,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/frontmatter/Foreward.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/frontmatter",
             "Name": "Foreward.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -442,7 +442,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book/indoctrinate.json",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/book",
             "Name": "indoctrinate.json",
-            "Format": "JSON",
+            "Format": "json",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -468,7 +468,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/data_model/Platform.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/data_model",
             "Name": "Platform.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -494,7 +494,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/data_model/indoctrinate.json",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/data_model",
             "Name": "indoctrinate.json",
-            "Format": "JSON",
+            "Format": "json",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -520,7 +520,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/data_model/model/MeadowModel-Extended.json",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/data_model/model",
             "Name": "MeadowModel-Extended.json",
-            "Format": "JSON",
+            "Format": "json",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -548,7 +548,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/data_model/model/entity/animals/Author.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/data_model/model/entity/animals",
             "Name": "Author.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -577,7 +577,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/data_model/model/entity/animals/Cat.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/data_model/model/entity/animals",
             "Name": "Cat.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -606,7 +606,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/data_model/model/entity/clinics/Book.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/data_model/model/entity/clinics",
             "Name": "Book.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -635,7 +635,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/data_model/model/entity/clinics/Vet.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/data_model/model/entity/clinics",
             "Name": "Vet.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -664,7 +664,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/data_model/model/entity_abstractions/animals.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/data_model/model/entity_abstractions",
             "Name": "animals.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -692,7 +692,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/document/Body.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/document",
             "Name": "Body.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -718,7 +718,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/document/Introduction.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/document",
             "Name": "Introduction.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -744,7 +744,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/document/indoctrinate.json",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/examples/document",
             "Name": "indoctrinate.json",
-            "Format": "JSON",
+            "Format": "json",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -770,7 +770,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/introduction.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs",
             "Name": "introduction.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -794,7 +794,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/overview.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs",
             "Name": "overview.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -818,7 +818,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/quickstart.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs",
             "Name": "quickstart.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -842,7 +842,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs/vocabulary.md",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/docs",
             "Name": "vocabulary.md",
-            "Format": "Markdown",
+            "Format": "markdown",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -866,7 +866,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/package-lock.json",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate",
             "Name": "package-lock.json",
-            "Format": "JSON",
+            "Format": "json",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -890,7 +890,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/package.json",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate",
             "Name": "package.json",
-            "Format": "JSON",
+            "Format": "json",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",
@@ -913,7 +913,7 @@
             "Path": "FILE://Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/source/Indoctrinate-DefaultSettings.json",
             "Location": "/Users/stevenvelozo/Code/retold/modules/utility/indoctrinate/source",
             "Name": "Indoctrinate-DefaultSettings.json",
-            "Format": "JSON",
+            "Format": "json",
             "Content": false,
             "Labels": [
                 "__LABELSET_TYPE",

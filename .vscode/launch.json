@@ -6,9 +6,10 @@
     "configurations": [
         {
             "name": "Launch Debug Harness",
-            "type": "pwa-node",
+            "type": "node",
             "request": "launch",
             "outputCapture": "std",
+            "cwd": "${workspaceFolder}/debug",
             "skipFiles": [
                 "<node_internals>/**"
             ],
@@ -35,7 +36,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "type": "pwa-node",
+            "type": "node",
             "presentation": {
                 "hidden": false,
                 "group": "",

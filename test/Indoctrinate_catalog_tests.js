@@ -44,7 +44,7 @@ suite
 								target_output:  `${__dirname}/../dist/unit_tests/target/indoctrinate-test-${tmpRunDate}`,
 							});
 
-						Expect(tmpCompiler).to.be.an('object', 'The compmiler should construct properly.');
+						Expect(tmpCompiler).to.be.an('object', 'The compiler should construct properly.');
 
 						tmpCompiler.compileContent(
 							() =>

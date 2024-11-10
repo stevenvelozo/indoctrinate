@@ -35,16 +35,21 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 			this.fable.AppData = {};
 		}
 
-		this.fable.AppData;
+		//this.fable.AppData;
 
 		this.log.info('Constructed the Indoctrinate Fable Service.');
 	}
 
+	// TODO: This uses the current AppData over CLI parameters which is bad -- but
+	//       maybe not in all cases.  Need to diagram each option and decide for
+	//       each one.
 	prepareConfigurations(fCallback)
 	{
 		// On the code flow diagram this is the "Source" box
+		// If there is a root folder setting already in AppData, prefer this.
+		this.fable.AppData.RootFolder = (typeof(this.fable.AppData.RootFolder) == 'string') ? this.fable.AppData.RootFolder
 				// If there is a root folder command-line parameter, use that
-		this.fable.AppData.RootFolder = (typeof(this.options.directory_root) == 'string') ? this.options.directory_root
+				: (typeof(this.options.directory_root) == 'string') ? this.options.directory_root
 				// Otherwise if there is a root folder setting in the settings file, use that.
 				: (typeof(this.fable.settings.RootFolder) == 'string') ? libPath.resolve(this.fable.settings.RootFolder)
 				// Otherwise use the cwd
@@ -58,7 +63,9 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 		// TODO: We can add more "folders to scan" before starting the scan if we want to, either from CLI or a loaded config.  Just push them into the above array.
 
 		// On the code flow diagram this is additional entries to the "Source" box
-		this.fable.AppData.AdditionalScanFolders = (Array.isArray(this.fable.settings.AdditionalScanFolders)) ? this.fable.settings.AdditionalScanFolders : [];
+		this.fable.AppData.AdditionalScanFolders = (Array.isArray(this.fable.AppData.AdditionalScanFolders)) ? this.fable.AppData.AdditionalScanFolders 
+			: (Array.isArray(this.fable.settings.AdditionalScanFolders)) ? this.fable.settings.AdditionalScanFolders 
+			: [];
 		for (let i = 0; i < this.fable.AppData.AdditionalScanFolders; i++)
 		{
 			// TODO: Add error handling for bad paths?
@@ -72,8 +79,10 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 		// TODO: We can add more "folders to scan" before starting the scan if we want to, either from CLI or a loaded config.  Just push them into the above array.
 
 		// On the code flow diagram this is the "Destination" box
+				// If this is already in the Appdata, use that.
+		this.fable.AppData.OutputFolderPath = (typeof(this.fable.AppData.OutputFolderPath) == 'string') ? libPath.resolve(this.fable.AppData.OutputFolderPath)
 				// If there is a target output command-line parameter, use that.
-		this.fable.AppData.OutputFolderPath = (typeof(this.options.target_output) == 'string') ? libPath.resolve(this.options.target_output)
+				: (typeof(this.options.target_output_folder) == 'string') ? libPath.resolve(this.options.target_output_folder)
 				// Otherwise if there is a target output setting in the settings file, use that.
 				: (typeof(this.fable.settings.TargetOutputFolder) == 'string') ? libPath.resolve(this.fable.settings.TargetOutputFolder)
 				// Otherwise use the CWD and make a subfolder called dist to use
@@ -82,15 +91,40 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 
 		// On the code flow diagram this is the "Staging" box
 				// If there is a staging command-line parameter, use that.
-		this.fable.AppData.StageFolderPath = (typeof(this.options.staging_folder) == 'string') ? libPath.resolve(this.options.staging_folder)
+		this.fable.AppData.StageFolderPath = (typeof(this.fable.AppData.StageFolderPath) == 'string') ? libPath.resolve(this.fable.AppData.StageFolderPath)
+				// If there is a staging command-line parameter, use that.
+				: (typeof(this.options.staging_folder) == 'string') ? libPath.resolve(this.options.staging_folder)
 				// Otherwise if there is a staging folder in the settings file, use that.
 				// The default is just indoctrinate_dontent_staging in the output folder path.
 				: libPath.resolve(`${this.fable.AppData.OutputFolderPath}/indoctrinate_content_staging`);
 
-		this.fable.AppData.TargetFilter = (typeof(this.options.target_filter) == 'string') ? this.options.target_filter : false;
+		this.fable.AppData.TargetFilter = (typeof(this.fable.AppData.TargetFilter) == 'string') ? this.fable.AppData.TargetFilter
+				: (typeof(this.options.target_filter) == 'string') ? this.options.target_filter 
+				: false;
 
-		this.fable.AppData.WriteCatalogFile = (typeof(this.options.catalog_file) == 'boolean') ? this.options.catalog_file : true;
+		this.fable.AppData.WriteCatalogFile = (typeof(this.fable.AppData.WriteCatalogFile) == 'boolean') ? this.fable.AppData.WriteCatalogFile
+				: (typeof(this.options.catalog_file) == 'boolean') ? this.options.catalog_file 
+				: true;
 
+		this.fable.AppData.IgnoreUnknownTypes = (typeof(this.fable.AppData.IgnoreUnknownTypes) == 'boolean') ? this.fable.AppData.IgnoreUnknownTypes
+				: (typeof(this.options.ignore_unknown) == 'boolean') ? this.options.ignore_unknown 
+				: false;
+
+		return fCallback();
+	}
+
+	disableCatalogWrites(fCallback)
+	{
+		this.log.trace(`Disabling Catalog Writes -- stashing current setting of ${this.fable.AppData.WriteCatalogFile}`);
+		this.stashedWriteCatalogFile = this.fable.AppData.WriteCatalogFile ? this.fable.AppData.WriteCatalogFile : false;
+		this.fable.AppData.WriteCatalogFile = false;
+		return fCallback();
+	}
+
+	restoreCatalogWrites(fCallback)
+	{
+		this.log.trace(`Restoring Catalog Writes -- setting to stashed setting of ${this.stashedWriteCatalogFile}`);
+		this.fable.AppData.WriteCatalogFile = this.stashedWriteCatalogFile ? this.stashedWriteCatalogFile : false;
 		return fCallback();
 	}
 
@@ -191,6 +225,37 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 
 		this.beginPhase(tmpAnticipate, `Documentation Phase 5: Cleanup....`);
 		this.endPhase(tmpAnticipate, 'Cleanup [Phase 5] Completed');
+
+		return tmpAnticipate.wait(fCallback);
+	}
+
+
+	extendedProcessContent(fCallback)
+	{
+		let tmpAnticipate = this.fable.newAnticipate();
+
+		tmpAnticipate.anticipate(this.disableCatalogWrites.bind(this));
+
+		this.beginPhase(tmpAnticipate, 'Indoctrination Phase 0: Processing Environment Preparation');
+		tmpAnticipate.anticipate(this.initializeServiceProviders.bind(this));
+		tmpAnticipate.anticipate(this.prepareConfigurations.bind(this));
+		tmpAnticipate.anticipate(this.prepareDestinationFolder.bind(this));
+		tmpAnticipate.anticipate(this.prepareStagingFolder.bind(this));
+		this.endPhase(tmpAnticipate, 'Preparation [Phase 0] Completed');
+
+		this.beginPhase(tmpAnticipate, `Indoctrination Phase 1: Preparint for extended processing of Ingested Content`);
+		tmpAnticipate.anticipate(this.fable.IndoctrinateServiceProcessor.prepareCatalogForProcessing.bind(this.fable.IndoctrinateServiceProcessor));
+		this.endPhase(tmpAnticipate, 'Processing [Phase 1] Completed');
+
+		this.beginPhase(tmpAnticipate, `Indoctrination Phase 1: Preparint for extended processing of Ingested Content`);
+		tmpAnticipate.anticipate(this.fable.IndoctrinateServiceProcessor.prepareCatalogForProcessing.bind(this.fable.IndoctrinateServiceProcessor));
+		this.endPhase(tmpAnticipate, 'Processing [Phase 1] Completed');
+
+		this.beginPhase(tmpAnticipate, `Indoctrination Phase 2: Preparint for extended processing of Ingested Content`);
+		tmpAnticipate.anticipate(this.fable.IndoctrinateServiceProcessor.processContentCatalog.bind(this.fable.IndoctrinateServiceProcessor));
+		this.endPhase(tmpAnticipate, 'Processing [Phase 2] Completed');
+
+		tmpAnticipate.anticipate(this.restoreCatalogWrites.bind(this));
 
 		return tmpAnticipate.wait(fCallback);
 	}

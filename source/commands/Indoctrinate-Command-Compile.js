@@ -11,14 +11,13 @@ class Compile extends libCLICommandLineCommand
 		this.options.Description = 'Compile content based on a configuration.';
 
 		this.options.CommandOptions.push({ Name: '-c, --catalog_file', Description: 'Write out the catalog Application Data file (this might be pretty big).' });
+		this.options.CommandOptions.push({ Name: '-i, --ignore_unknown', Description: 'Ignore unknown file types.' });
 
 
 		this.options.CommandOptions.push({ Name: '-d, --directory_root [directory_root]', Description: 'The root directory for relative paths in the config.  Defaults to CWD.' });
 		this.options.CommandOptions.push({ Name: '-s, --staging_folder [staging_folder]', Description: 'The staging folder for intermediate files generated and/or downloaded during compilation.'})
 
-		this.options.CommandOptions.push({ Name: '-t, --target_filter [target_filter]', Description: 'The filter to constrain targets by.' });
-
-		this.fable.serviceManager.addServiceType('Indoctrinate', require(`../Indoctrinate-Fable-Service.js`));
+		this.options.CommandOptions.push({ Name: '-t, --target_output_folder [target_output_folder]', Description: 'The folder to ouput to.' });
 
 		this.addCommand();
 	}

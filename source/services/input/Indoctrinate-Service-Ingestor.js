@@ -2,6 +2,7 @@
 const libPictServiceCommandLineUtility = require('pict-service-commandlineutility');
 
 const libPath = require('path');
+const libMime = require('mime');
 
 class Ingestor extends libPictServiceCommandLineUtility.ServiceProviderBase
 {
@@ -32,15 +33,15 @@ class Ingestor extends libPictServiceCommandLineUtility.ServiceProviderBase
 		}
 	}
 
-	getContentHash(pPath, pType)
+	getContentHash(pPath, pAddressType)
 	{
-		return `${pType}~CONTENT~${pPath}`;
+		return `${pAddressType}~CONTENT~${pPath}`;
 	}
 
-	getContentLocation(pPath, pType)
+	getContentLocation(pPath, pAddressType)
 	{
 		// The base ingestor deals exclusively with files.
-		if (this.fable.DataFormat.stringStartsWith(pPath.toUpperCase(), "FILE://") && (pType == 'URI'))
+		if (this.fable.DataFormat.stringStartsWith(pPath.toUpperCase(), "FILE://") && (pAddressType == 'URI'))
 		{
 			// Parse the path out of the file URI ... we want to strip off the `FILE://` first
 			let tmpLocation = libPath.dirname(pPath.substr(6));
@@ -54,10 +55,10 @@ class Ingestor extends libPictServiceCommandLineUtility.ServiceProviderBase
 		}
 	}
 
-	getContentName(pPath, pType)
+	getContentName(pPath, pAddressType)
 	{
 		// The base ingestor deals exclusively with files.
-		if (this.fable.DataFormat.stringStartsWith(pPath.toUpperCase(), "FILE://") && (pType == 'URI'))
+		if (this.fable.DataFormat.stringStartsWith(pPath.toUpperCase(), "FILE://") && (pAddressType == 'URI'))
 		{
 			// Parse the name out of the file URI ... we want to strip off the `FILE://` first
 			let tmpName = libPath.basename(pPath.substr(6));
@@ -71,50 +72,36 @@ class Ingestor extends libPictServiceCommandLineUtility.ServiceProviderBase
 		}
 	}
 
-	// TODO: This function is not good; it basically just uses the extension of the file and only works on files.
-	// TODO: Before we start to allow the use of URLs as components of output documents, fix this.
-	// TODO: Consider using mime libraries.
-	getContentFormat(pPath, pType)
+	// Yes, mime types are "type" and "subtype" but we are going with "nature", "format" and "flavor" for a more granular approach
+	getContentNature(pPath, pAddressType, pMimeType)
+	{
+		let tmpNature = 'UNKNOWN';
+
+		if (typeof(pMimeType) !== 'string')
+		{
+			return tmpNature;
+		}
+		let tmpMimeTypeParts = pMimeType.split('/');
+		if (tmpMimeTypeParts.length > 0)
+		{
+			tmpNature = tmpMimeTypeParts[0];
+		}
+
+		return tmpNature;
+	}
+
+	getContentFormat(pPath, pAddressType, pMimeType)
 	{
 		let tmpFormat = 'UNKNOWN';
 
-		// The base ingestor deals exclusively with files.
-		if (this.fable.DataFormat.stringStartsWith(pPath.toUpperCase(), "FILE://") && (pType == 'URI'))
+		if (typeof(pMimeType) !== 'string')
 		{
-			// Parse the format out of the file URI ... we want to strip off the `FILE://` first
-			// TODO: Switch this around to mime types
-			switch (libPath.extname(pPath.substr(6)).toUpperCase())
-			{
-				case '.MD':
-				case '.MARKDOWN':
-					tmpFormat = 'Markdown';
-					break;
-				case '.HTML':
-					tmpFormat = 'HTML';
-					break;
-				case '.JSON':
-					tmpFormat = 'JSON';
-					break;
-				// What the heck should we do about all the new wacky javascript extensions like ts and the module-type specific file extensions
-				// Hashtag feeling old.
-				case '.JS':
-					tmpFormat = 'Javascript';
-					break;
-				case '.TXT':
-					tmpFormat = 'TEXT';
-					break;
-				// TODO: PDF? YAML? ....... other file types?
-			}
+			return tmpFormat;
 		}
-		// Example breakout for https protocol
-		else if (this.fable.DataFormat.stringStartsWith(pPath.toUpperCase(), "HTTPS://") && (pType == 'URI'))
+		let tmpMimeTypeParts = pMimeType.split('/');
+		if (tmpMimeTypeParts.length > 1)
 		{
-			// Handle https:// mime type gathering
-		}
-		// TODO: teach this http, sftp, ftp, scp, kiwix (this is where those else if blocks go until things get unwieldy)
-		else
-		{
-			// If we want to do anything for unknown format files
+			tmpFormat = tmpMimeTypeParts[1];
 		}
 
 		return tmpFormat;
@@ -223,7 +210,7 @@ class Ingestor extends libPictServiceCommandLineUtility.ServiceProviderBase
 		return pContentDescription;
 	}
 
-	createContentDescription(pPath, pType)
+	createContentDescription(pPath, pAddressType)
 	{
 		if (typeof(pPath) !== 'string')
 		{
@@ -231,22 +218,31 @@ class Ingestor extends libPictServiceCommandLineUtility.ServiceProviderBase
 		}
 
 		// The default type is a URI
-		let tmpType = (typeof(pType) === 'undefined') ? 'URI' : pType;
+		let tmpAddressType = (typeof(pAddressType) === 'undefined') ? 'URI' : pAddressType;
+		let tmpMimeType = libMime.getType(pPath);
 
 		// Get a content description object
 		let tmpContentDescription = (
 			{
 				"UUID": this.fable.getUUID(),
-				"Type": tmpType,
-				"Hash": this.getContentHash(pPath, tmpType),
+				"Type": tmpAddressType,
+				"Hash": this.getContentHash(pPath, tmpAddressType),
 
 				"Path": pPath,
 
-				"Location": this.getContentLocation(pPath, tmpType),
-				"Name": this.getContentName(pPath, tmpType),
+				"Location": this.getContentLocation(pPath, tmpAddressType),
+				"Name": this.getContentName(pPath, tmpAddressType),
+
+				// Mime is the mime type of the file (e.g. text/plain, text/markdown, application/json, etc.)
+				"MimeType": tmpMimeType,
+
+				// Nature is the general type of the file (e.g. text, application, image, etc.)
+				"Nature": this.getContentNature(pPath, tmpAddressType, tmpMimeType),
 
 				// Format is the file format (e.g. txt, md, json, xml, html, csv, etc.)
-				"Format": this.getContentFormat(pPath, tmpType),
+				// This is distinct from Mime type because there are different formats for the same type (e.g. a gutenberg text file and a plain text file)
+				"Format": this.getContentFormat(pPath, tmpAddressType, tmpMimeType),
+
 				// Schema is an extra descriptor to tell us if we can expect specific content or content markers (e.g. a package.json)
 				"Schema": 'Default',
 
@@ -256,16 +252,15 @@ class Ingestor extends libPictServiceCommandLineUtility.ServiceProviderBase
 			});
 
 		// TODO: Create Ingestors for each type below so they are easy to add.
-		if (tmpContentDescription.Format == 'Markdown')
+		if (tmpContentDescription.Format == 'markdown')
 		{
 			// The markdown files are used to automagically add some extra labels to the content during the compile phase, so pull them in.
-			tmpContentDescription.Format = 'Markdown';
 			console.log(`... Reading Markdown file [${tmpContentDescription.Path}] ...`);
 			tmpContentDescription.Content = this.fable.FilePersistence.readFileSync(libPath.join(tmpContentDescription.Location, tmpContentDescription.Name));
 			console.log(`    (read ${tmpContentDescription.Content.length} characters from the file)`)
 		}
 
-		if (tmpContentDescription.Format == 'JSON')
+		if (tmpContentDescription.Format == 'json')
 		{
 			// There are some JSON files which need to be loaded now, to ingest extra folders.
 			console.log(`... checking if JSON file ${tmpContentDescription.Path} is one of the special internal file types...`);

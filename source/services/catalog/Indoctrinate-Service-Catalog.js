@@ -149,7 +149,7 @@ class IndoctrinateServiceCatalog extends libPictServiceCommandLineUtility.Servic
 			this.catalogIndices = this.fable.AppData.SourceContentCatalogIndices;
 		}
 
-		if (pContentDescription.Format == 'UNKNOWN')
+		if ((this.fable.AppData.IgnoreUnknownTypes) && (pContentDescription.Format == 'UNKNOWN'))
 		{
 			return false;
 		}
