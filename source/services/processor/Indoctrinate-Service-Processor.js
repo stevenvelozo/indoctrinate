@@ -13,6 +13,7 @@ class IndoctrinateServiceProcessor extends libPictServiceCommandLineUtility.Serv
 		this.processingTasks = [];
 
 		this.fable.addServiceTypeIfNotExists('IndoctrinateProcessorUnderstandFile', libIndoctrinateUnderstandFile);
+
 		this.processingTasks.push(this.fable.instantiateServiceProviderWithoutRegistration('IndoctrinateProcessorUnderstandFile'));
 
 		this.log.info('Constructed Processor Service.');

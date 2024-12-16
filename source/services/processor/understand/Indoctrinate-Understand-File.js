@@ -18,7 +18,27 @@ class IndoctrinateUnderstandFile extends libIndoctrinateProcessingTask
 	processContentFile(fCallback, pContentDescription)
 	{
 		console.log(`--> Getting the magic bytes for ${this.constructFileName(pContentDescription)}`);
-		console.log(`  > ${JSON.stringify(libMagicBytes.filetypemime(this.readBytesSync(pContentDescription, 0, 100)))}`);
+		let tmpFileHeaderBytes = this.readBytesSync(pContentDescription, 0, 100);
+		let tmpMagicByteData = libMagicBytes.filetypemime(tmpFileHeaderBytes);
+		if (tmpMagicByteData.length > 0)
+		{
+			console.log(`  > Magic Bytes: ${JSON.stringify(tmpMagicByteData)}`);
+			let tmpMagicByteExtension = libMagicBytes.filetypeextension(tmpFileHeaderBytes);
+			if (tmpMagicByteExtension.length > 0)
+			{
+				if (tmpMagicByteExtension.length > 1)
+				{
+					console.log(`  > Multiple file extensions found for file; defaulting to first: ${JSON.stringify(tmpMagicByteExtension)}`);
+				}
+				this.addContentToExtendedCatalogData(pContentDescription, tmpMagicByteExtension[0], 'MB_EXT');
+			}
+		}
+		else
+		{
+			console.log(`  > File type could not be determined from magic bytes.`);
+		}
+		// This is to save bytes in ginormous json.
+		this.addContentToExtendedCatalogData(pContentDescription, tmpMagicByteData, 'MB_MIME');
 		return fCallback();
 	}
 }

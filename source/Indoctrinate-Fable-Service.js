@@ -229,11 +229,11 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 		return tmpAnticipate.wait(fCallback);
 	}
 
-
 	extendedProcessContent(fCallback)
 	{
 		let tmpAnticipate = this.fable.newAnticipate();
 
+		// No need to write the catalog file until we're done processing the set.
 		tmpAnticipate.anticipate(this.disableCatalogWrites.bind(this));
 
 		this.beginPhase(tmpAnticipate, 'Indoctrination Phase 0: Processing Environment Preparation');
@@ -243,19 +243,14 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 		tmpAnticipate.anticipate(this.prepareStagingFolder.bind(this));
 		this.endPhase(tmpAnticipate, 'Preparation [Phase 0] Completed');
 
-		this.beginPhase(tmpAnticipate, `Indoctrination Phase 1: Preparint for extended processing of Ingested Content`);
+		this.beginPhase(tmpAnticipate, `Indoctrination Phase 1: Preparing the catalog for extended processing of Ingested Content`);
 		tmpAnticipate.anticipate(this.fable.IndoctrinateServiceProcessor.prepareCatalogForProcessing.bind(this.fable.IndoctrinateServiceProcessor));
 		this.endPhase(tmpAnticipate, 'Processing [Phase 1] Completed');
 
-		this.beginPhase(tmpAnticipate, `Indoctrination Phase 1: Preparint for extended processing of Ingested Content`);
-		tmpAnticipate.anticipate(this.fable.IndoctrinateServiceProcessor.prepareCatalogForProcessing.bind(this.fable.IndoctrinateServiceProcessor));
-		this.endPhase(tmpAnticipate, 'Processing [Phase 1] Completed');
-
-		this.beginPhase(tmpAnticipate, `Indoctrination Phase 2: Preparint for extended processing of Ingested Content`);
+		this.beginPhase(tmpAnticipate, `Indoctrination Phase 2: Executing extended processing of Ingested Content`);
 		tmpAnticipate.anticipate(this.fable.IndoctrinateServiceProcessor.processContentCatalog.bind(this.fable.IndoctrinateServiceProcessor));
-		this.endPhase(tmpAnticipate, 'Processing [Phase 2] Completed');
-
 		tmpAnticipate.anticipate(this.restoreCatalogWrites.bind(this));
+		this.endPhase(tmpAnticipate, 'Processing [Phase 2] Completed');
 
 		return tmpAnticipate.wait(fCallback);
 	}
