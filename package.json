@@ -49,6 +49,8 @@
         ]
     },
     "dependencies": {
+        "chota": "^0.9.2",
+        "lunr": "^2.3.9",
         "magic-bytes.js": "^1.10.0",
         "marked": "^15.0.0",
         "marked-tex-renderer": "^1.1.1",

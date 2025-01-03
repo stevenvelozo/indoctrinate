@@ -6,11 +6,11 @@ let libIndoctrinate = require('../source/Indoctrinate-CLIProgram.js');
 
 // The folder to read
 let tmpInputFolder = `${__dirname}/../`;
-//tmpInputFolder = `${__dirname}/../docs/examples/book/`;
+tmpInputFolder = `${__dirname}/../docs/examples/book/`;
 //tmpInputFolder = `${__dirname}/../examples/data_model/`;
 //tmpInputFolder = `${__dirname}/../examples/document/`;
 //tmpInputFolder = `${__dirname}/../examples/monorepo/`;
-tmpInputFolder = `${__dirname}/tmp/`;
+//tmpInputFolder = `${__dirname}/tmp/`;
 tmpInputFolder = libPath.resolve(tmpInputFolder);
 
 // The folder to write documentation (and staged files) to

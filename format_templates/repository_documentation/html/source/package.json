@@ -1,0 +1,34 @@
+{
+    "name": "repository_documentation",
+    "version": "1.0.0",
+    "description": "Basic documentation for a git repository.",
+    "main": "Repository-Documentation-Application.js",
+    "scripts": {
+        "start": "node Repository-Documentation-Application.js",
+        "build": "npx quack build && npx quack copy"
+    },
+    "author": "steven",
+    "license": "MIT",
+    "devDependencies": {},
+    "copyFilesSettings": {
+        "whenFileExists": "overwrite"
+    },
+    "copyFiles": [
+        {
+            "from": "../assets/*",
+            "to": "../dist/"
+        },
+        {
+            "from": "./dist/*",
+            "to": "../dist/"
+        },
+        {
+            "from": "../../../../node_modules/pict/dist/pict.min*",
+            "to": "../dist/"
+        },
+        {
+            "from": "../../../../node_modules/lunr/lunr.js",
+            "to": "../dist/"
+        }
+    ]
+}
