@@ -14,16 +14,16 @@ RUN echo "Building development image..."
 RUN echo "...installing vscode extensions..."
 
 # Mocha unit testing in the sidebar
-RUN code-server --install-extension hbenl.vscode-mocha-test-adapter
-RUN code-server --install-extension hbenl.test-adapter-converter
-RUN code-server --install-extension hbenl.vscode-test-explorer
+# RUN code-server --install-extension hbenl.vscode-mocha-test-adapter
+# RUN code-server --install-extension hbenl.test-adapter-converter
+# RUN code-server --install-extension hbenl.vscode-test-explorer
 
 # Magic indentation rainbow
-RUN code-server --install-extension oderwat.indent-rainbow
-RUN code-server --install-extension dbaeumer.vscode-eslint
+# RUN code-server --install-extension oderwat.indent-rainbow
+# RUN code-server --install-extension dbaeumer.vscode-eslint
 
 # Contextual git
-RUN code-server --install-extension eamodio.gitlens
+# RUN code-server --install-extension eamodio.gitlens
 
 # Other extensions (uncomment them to have them automagic, or run this from a terminal to install in the container):
 

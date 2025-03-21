@@ -1,0 +1,18 @@
+{
+	"sqltools.connections": [
+		{
+			"mysqlOptions": {
+				"authProtocol": "default",
+				"enableSsl": "Disabled"
+			},
+			"previewLimit": 50,
+			"server": "localhost",
+			"port": 43306,
+			"driver": "MariaDB",
+			"name": "Local Bookstore",
+			"database": "bookstore",
+			"username": "root",
+			"password": "123456789"
+		}
+	]
+}
