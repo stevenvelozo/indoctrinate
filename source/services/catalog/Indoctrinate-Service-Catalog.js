@@ -3,6 +3,7 @@ const libPictServiceCommandLineUtility = require('pict-service-commandlineutilit
 // TODO: Make these fable services?  Fits the pattern, adds a little complexity.
 //       Discuss first, pattern later.  Does not affect execution behavior just maintenance and dependencies.
 const libCatalogFilterBase = require('./filter/Indoctrinate-Catalog-Filter.js');
+
 const libCatalogFilterFormat = require('./filter/Indoctrinate-Catalog-Filter-Format.js');
 const libCatalogFilterSchema = require('./filter/Indoctrinate-Catalog-Filter-Schema.js');
 const libCatalogFilterLabel = require('./filter/Indoctrinate-Catalog-Filter-Label.js');
@@ -20,6 +21,11 @@ class IndoctrinateServiceCatalog extends libPictServiceCommandLineUtility.Servic
 		this.catalogIndices = [];
 
 		this.fable.addServiceType('IndoctrinateCatalogFilter', libCatalogFilterBase);
+
+		if (!this.fable.AppData.SourceContentCatalog)
+		{
+			this.fable.AppData.SourceContentCatalog = {};
+		}
 
 		this.log.info('Constructed Catalog Service.');
 	}
@@ -133,10 +139,6 @@ class IndoctrinateServiceCatalog extends libPictServiceCommandLineUtility.Servic
 		// Lazily instantiate the catalog, and create it in AppData if it doesn't exist.
 		if (!this.catalog)
 		{
-			if (!this.fable.AppData.SourceContentCatalog)
-			{
-				this.fable.AppData.SourceContentCatalog = {};
-			}
 			this.catalog = this.fable.AppData.SourceContentCatalog;
 		}
 

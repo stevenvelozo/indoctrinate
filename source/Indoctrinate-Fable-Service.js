@@ -1,6 +1,15 @@
 const libPict = require('pict');
 const libPath = require('path');
 
+const libIndoctrinateServiceCatalog = require(`./services/catalog/Indoctrinate-Service-Catalog.js`);
+const libIndoctrinateServiceStructure = require(`./services/structure/Indoctrinate-Service-Structure.js`);
+
+const libIndoctrinateServiceInput = require(`./services/input/Indoctrinate-Service-Input.js`);
+
+const libIndoctrinateServiceProcessor = require(`./services/processor/Indoctrinate-Service-Processor.js`);
+const libIndoctrinateServiceOutput = require(`./services/output/Indoctrinate-Service-Output.js`);
+
+
 class IndoctrinateFableService extends libPict.ServiceProviderBase
 {
 	constructor(pFable, pOptions, pServiceHash)
@@ -8,32 +17,19 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 		super(pFable, pOptions, pServiceHash);
 		this.serviceType = 'IndoctrinateFableService';
 
-		if (!this.fable.hasOwnProperty('IndoctrinateServiceCatalog'))
-		{
-			this.fable.serviceManager.addServiceType('IndoctrinateServiceCatalog', require(`./services/catalog/Indoctrinate-Service-Catalog.js`));
-		}
-		if (!this.fable.hasOwnProperty('IndoctrinateServiceStructure'))
-		{
-			this.fable.serviceManager.addServiceType('IndoctrinateServiceStructure', require(`./services/structure/Indoctrinate-Service-Structure.js`));
-		}
-
-		if (!this.fable.hasOwnProperty('IndoctrinateServiceInput'))
-		{
-			this.fable.serviceManager.addServiceType('IndoctrinateServiceInput', require(`./services/input/Indoctrinate-Service-Input.js`));
-		}
-		if (!this.fable.hasOwnProperty('IndoctrinateServiceProcessor'))
-		{
-			this.fable.serviceManager.addServiceType('IndoctrinateServiceProcessor', require(`./services/processor/Indoctrinate-Service-Processor.js`));
-		}
-		if (!this.fable.hasOwnProperty('IndoctrinateServiceOutput'))
-		{
-			this.fable.serviceManager.addServiceType('IndoctrinateServiceOutput', require(`./services/output/Indoctrinate-Service-Output.js`));
-		}
-
+		// Cheat in case this isn't running in a pict; we really would prefer that.
 		if (!this.fable.hasOwnProperty('AppData'))
 		{
 			this.fable.AppData = {};
 		}
+
+		this.fable.addAndInstantiateServiceTypeIfNotExists('IndoctrinateServiceCatalog', libIndoctrinateServiceCatalog);
+		this.fable.addAndInstantiateServiceTypeIfNotExists('IndoctrinateServiceStructure', libIndoctrinateServiceStructure);
+
+		this.fable.addAndInstantiateServiceTypeIfNotExists('IndoctrinateServiceInput', libIndoctrinateServiceInput);
+
+		this.fable.addAndInstantiateServiceTypeIfNotExists('IndoctrinateServiceProcessor', libIndoctrinateServiceProcessor);
+		this.fable.addAndInstantiateServiceTypeIfNotExists('IndoctrinateServiceOutput', libIndoctrinateServiceOutput);
 
 		//this.fable.AppData;
 

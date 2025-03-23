@@ -30,8 +30,7 @@ Enumerate a catalog and generate full file names and inferred file types (where 
 jq '.SourceContentCatalog[]' dist/indoctrinate_content_staging/Indoctrinate-Catalog-AppData.json | jq -c 'select(.ExtendedContent.MIMECHK | length > 0)'
 ```
 
-Enumerate a catalog and generate a copy command to _TARGET_FOLDER ready for some search and replace simplicity:
-
+Enumerate a catalog and generate a copy command to _TARGET_FOLDER ready for some search and replace simplicity
 * the sed does replacing of the _DBL_QT variable for double quotes because otherwise writing it to work on mac and linux is almost impossible
 * there is a "do this in less jq steps" version of this but this makes it easier to retool specific parts of the chain
 * the -r in last jq query makes the output raw and so not wrapped in double quotes
@@ -42,3 +41,7 @@ jq '.SourceContentCatalog[]' dist/indoctrinate_content_staging/Indoctrinate-Cata
 | jq '.Command = "cp _DBL_QT" + .Location + "/" + .Name + "_DBL_QT _DBL_QT_TARGET_FOLDER/" + .Name + "." + .ExtendedContent.MB_EXT + "_DBL_QT"' | jq -r .Command | sed 's/_DBL_QT/"/g' \
 > Copy_Operation.sh
 ```
+
+## Fast MD5
+
+https://www.npmjs.com/package/hash-wasm
