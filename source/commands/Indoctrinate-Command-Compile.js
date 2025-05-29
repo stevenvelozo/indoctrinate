@@ -1,5 +1,8 @@
 const libCLICommandLineCommand = require('pict-service-commandlineutility').ServiceCommandLineCommand;
 
+const libFS = require('fs');
+const libPath = require('path');
+
 class Compile extends libCLICommandLineCommand
 {
 	constructor(pFable, pOptions, pServiceHash)
@@ -24,6 +27,38 @@ class Compile extends libCLICommandLineCommand
 
 	onRunAsync(fCallback)
 	{
+		let tmpCommandOptions = this.CommandOptions;
+
+		// Chck if the directory_root is set, if not, use the current working directory
+		if (!tmpCommandOptions.directory_root || tmpCommandOptions.directory_root === '')
+		{
+			tmpCommandOptions.directory_root = process.cwd();
+		}
+		else
+		{
+			// Check if the diretory_root is a relative path, if so, resolve it to an absolute path
+			if (!libPath.isAbsolute(tmpCommandOptions.directory_root))
+			{
+				tmpCommandOptions.directory_root = libPath.resolve(tmpCommandOptions.directory_root);
+			}
+			tmpCommandOptions.directory_root = libPath.resolve(tmpCommandOptions.directory_root);
+		}
+
+		// Check if the target_output_folder is set, if not, use the current working directory
+		if (!tmpCommandOptions.target_output_folder || tmpCommandOptions.target_output_folder === '')
+		{
+			tmpCommandOptions.target_output_folder = process.cwd();
+		}
+		else
+		{
+			// Check if the target_output_folder is a relative path, if so, resolve it to an absolute path
+			if (!libPath.isAbsolute(tmpCommandOptions.target_output_folder))
+			{
+				tmpCommandOptions.target_output_folder = libPath.resolve(tmpCommandOptions.target_output_folder);
+			}
+			tmpCommandOptions.target_output_folder = libPath.resolve(tmpCommandOptions.target_output_folder);
+		}
+
 		let tmpIndoctrinate = this.fable.serviceManager.instantiateServiceProvider('Indoctrinate', this.CommandOptions);
 
 		return tmpIndoctrinate.compileContent(fCallback);

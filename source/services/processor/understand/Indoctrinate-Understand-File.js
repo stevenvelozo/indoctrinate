@@ -19,6 +19,8 @@ class IndoctrinateUnderstandFile extends libIndoctrinateProcessingTask
 	{
 		console.log(`--> Getting the magic bytes for ${this.constructFileName(pContentDescription)}`);
 		let tmpFileHeaderBytes = this.readBytesSync(pContentDescription, 0, 100);
+		// TODO: Add this as an optional persist -- definitely not every time.
+		//this.addContentToExtendedCatalogData(pContentDescription, tmpFileHeaderBytes, 'MB_HDRB');
 		let tmpMagicByteData = libMagicBytes.filetypemime(tmpFileHeaderBytes);
 		if (tmpMagicByteData.length > 0)
 		{

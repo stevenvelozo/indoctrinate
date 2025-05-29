@@ -31,8 +31,6 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 		this.fable.addAndInstantiateServiceTypeIfNotExists('IndoctrinateServiceProcessor', libIndoctrinateServiceProcessor);
 		this.fable.addAndInstantiateServiceTypeIfNotExists('IndoctrinateServiceOutput', libIndoctrinateServiceOutput);
 
-		//this.fable.AppData;
-
 		this.log.info('Constructed the Indoctrinate Fable Service.');
 	}
 
@@ -212,11 +210,11 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 		this.endPhase(tmpAnticipate, 'Processing [Phase 2] Completed');
 
 
-		this.beginPhase(tmpAnticipate, `Documentation Phase 3: Generating Structured Content`);
+		this.beginPhase(tmpAnticipate, `Compilation Phase 3: Generating Structured Content`);
 		tmpAnticipate.anticipate(this.fable.IndoctrinateServiceOutput.outputTargets.bind(this.fable.IndoctrinateServiceOutput));
 		this.endPhase(tmpAnticipate, 'Generation [Phase 3] Completed');
 
-		this.beginPhase(tmpAnticipate, `Documentation Phase 4: Copying Content to Destination`);
+		this.beginPhase(tmpAnticipate, `Compilation Phase 4: Copying Content to Destination`);
 		this.endPhase(tmpAnticipate, 'Copying [Phase 4] Completed');
 
 		this.beginPhase(tmpAnticipate, `Documentation Phase 5: Cleanup....`);
