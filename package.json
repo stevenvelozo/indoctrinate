@@ -1,6 +1,6 @@
 {
     "name": "indoctrinate",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Documentation generation and indoctrination.",
     "main": "source/Indoctrinate-CLIProgram.js",
     "directories": {
@@ -16,6 +16,10 @@
         "docker-dev-build": "docker build ./ -f Dockerfile_LUXURYCode -t indoctrinate-image:local",
         "docker-dev-run": "docker run -it -d --name indoctrinate-dev -p 34775:8080 -p 28545:8086 -v \"$PWD/.config:/home/coder/.config\"  -v \"$PWD:/home/coder/indoctrinate\" -u \"$(id -u):$(id -g)\" -e \"DOCKER_USER=$USER\" indoctrinate-image:local",
         "docker-dev-shell": "docker exec -it indoctrinate-dev /bin/bash"
+    },
+    "bin": {
+        "indoctrinate": "./bin/indoctrinate",
+        "ind": "./bin/indoctrinate"
     },
     "repository": {
         "type": "git",
