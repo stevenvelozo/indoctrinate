@@ -1,6 +1,6 @@
 {
     "name": "indoctrinate",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Documentation generation and indoctrination.",
     "main": "source/Indoctrinate-CLIProgram.js",
     "directories": {
@@ -18,8 +18,7 @@
         "docker-dev-shell": "docker exec -it indoctrinate-dev /bin/bash"
     },
     "bin": {
-        "indoctrinate": "./bin/indoctrinate",
-        "ind": "./bin/indoctrinate"
+        "indoctrinate": "./bin/indoctrinate"
     },
     "repository": {
         "type": "git",
