@@ -268,7 +268,14 @@ class Ingestor extends libPictServiceCommandLineUtility.ServiceProviderBase
 			{
 				// The node package.json files are used to automagically add some extra labels to the content during the compile phase, so pull them in.
 				tmpContentDescription.Schema = 'PackageDotJSON';
-				tmpContentDescription.Content = require(libPath.join(tmpContentDescription.Location, tmpContentDescription.Name));
+				try
+				{
+					tmpContentDescription.Content = require(libPath.join(tmpContentDescription.Location, tmpContentDescription.Name));
+				}
+				catch(pError)
+				{
+					this.fable.log.error(`Error loading or parsing the package.json file [${tmpContentDescription.Path}]: ${pError}`);
+				}
 			}
 			if (tmpContentDescription.Name.toUpperCase().indexOf('INDOCTRINATE-EXTRAFOLDERS.JSON') == 0)
 			{

@@ -132,7 +132,8 @@ class FileScanner extends libPictServiceCommandLineUtility.ServiceProviderBase
 							{
 								if (pFileStatError)
 								{
-									return fEnumerationComplete('File stat error during enumeration:' + pFileStatError);
+									this.fable.log.error(`Error reading stats for file [${tmpFilePath}]: ${pFileStatError}`);
+									return fEnumerationComplete();
 								}
 
 								if (this.ignoredFileNameMap.hasOwnProperty(pFileName))
