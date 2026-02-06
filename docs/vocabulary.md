@@ -1,84 +1,76 @@
 # Vocabulary
 
-## Content
+Indoctrinate has a specific vocabulary for describing its content pipeline. This glossary defines each term and shows where it fits in the system.
 
-Content is any single piece or body of material.  These can be textual, referencial, data or media.
+## Core Terms
 
-Examples of content:
+| Term | Definition | Learn More |
+|------|-----------|------------|
+| **Content** | Any single piece or body of material — textual, referential, data, or media | [Content Descriptions](concepts/content-descriptions.md) |
+| **Content Description** | The metadata record Indoctrinate creates for each piece of content: UUID, path, labels, type info, and optionally the file body | [Content Descriptions](concepts/content-descriptions.md) |
+| **Source Material** | The input files, data responses, and other content used to generate output | [Input & Scanning](pipeline/input.md) |
+| **Output Material** | The generated files produced after source material flows through a structure and format | [Output & Formatting](pipeline/output.md) |
+| **Catalog** | The in-memory store of all content descriptions, queryable by labels, format, and schema | [Catalog & Filtering](concepts/catalog-filtering.md) |
 
-* Markdown
-* Photographs
-* Diagrams
-* Source Code
-* Tabular Lists of Names
-* JSON Records and Comprehensions
+## Labels & Filtering
 
-## Dictionary
+| Term | Definition | Learn More |
+|------|-----------|------------|
+| **Label** | A textual token automatically generated from a file's path, name, or type | [Labels](concepts/labels.md) |
+| **Label Set** | A group of labels sharing a common marker (e.g., `__LABELSET_ADDRESS`) | [Labels](concepts/labels.md) |
+| **Filter** | A query object that selects content from the catalog by labels, format, or schema | [Catalog & Filtering](concepts/catalog-filtering.md) |
+| **Proximal Match** | A label filter where terms must appear adjacent to each other in order | [Labels](concepts/labels.md) |
+| **Set End Match** | A label filter where terms must appear at the end of a label set boundary — useful for non-recursive folder matching | [Labels](concepts/labels.md) |
 
-A series of terms with specific meanings for a specific Content Output Structure.  Sometimes "class" means a group of students ready to learn from a teacher, and sometimes "class" means you are declaring the shape of an object in object-oriented programming.
+## Structure & Output
 
-Indoctrinate aims to be aware of Vocabulary and use it as a first class citizen in as many ways possible.
+| Term | Definition | Learn More |
+|------|-----------|------------|
+| **Structure** | The definition of section shape and source material for a particular output — what content goes where | [Structures & Targets](configuration/structures-targets.md) |
+| **Section** | A named part of a structure with its own set of filters that select content from the catalog | [Structures & Targets](configuration/structures-targets.md) |
+| **Target** | A specific output format paired with a structure — one structure can produce multiple targets | [Structures & Targets](configuration/structures-targets.md) |
+| **Format** | The output type for generated material (e.g., HTML, Markdown, LaTeX) | [Structures & Targets](configuration/structures-targets.md) |
+| **Formatter** | The service that transforms structured content into a specific output format | [Output & Formatting](pipeline/output.md) |
 
-## Term
+## Pipeline
 
-A Term is a single word in the content-specific Dictionary.
+| Term | Definition | Learn More |
+|------|-----------|------------|
+| **Compilation** | The full pipeline: scan files, catalog them, process content, apply structures, generate output | [Architecture](architecture.md) |
+| **Scanner** | The service that traverses the filesystem to discover files | [Input & Scanning](pipeline/input.md) |
+| **Ingestor** | The service that creates content descriptions from discovered files | [Input & Scanning](pipeline/input.md) |
+| **Processing Task** | A step that analyzes or enriches content descriptions after cataloging (e.g., magic byte detection) | [Processing Tasks](pipeline/processing.md) |
+| **AppData** | The central state object that flows through all compilation phases and can be serialized to JSON | [Architecture](architecture.md) |
 
-## Source Material
+## Content Examples
 
-Any of the source file(s), data responses from API endpoints and other Content that is used to generate different outputs.
+Content can be many things:
 
-## Structure
+- Markdown documents
+- Photographs and diagrams
+- Source code files
+- Tabular data and CSV files
+- JSON records and configuration
+- Binary assets (detected via magic bytes)
 
-The definition of Section shape and Source Material for how a particular Output should be Compiled.
+## Structure Examples
 
-### Example: The Structure of a typical Book
+A structure defines the shape of a particular kind of output. The same source material can be arranged differently depending on the goal.
 
-* front matter
-* table of contents
-* foreward
-* parts/chapters
-* index
-* glossary
+**A book:**
+front matter, table of contents, foreword, chapters, index, glossary
 
-### Example: The structure of interactive documentation for a software code repository
- 
-* navigation (table of contents)
-* quick start
-* tutorials
-* data model design documentation
-* software architectural design documentation
-* api reference
-* examples
-* a searchable index
+**A software documentation site:**
+navigation, quick start, tutorials, data model docs, architecture docs, API reference, examples, searchable index
 
-### Example: The structure of a typical solution plan
+**A solution plan:**
+executive summary, contacts, project summary, problem description, technical architecture, glossary, change log
 
-* navigation (table of contents)
-* executive summary
-* solution contacts
-* project work summary
-* business problem description
-* technical architecture
-* technical glossary
-* change log
+**A zine:**
+title page, table of contents, letter from editor, articles, graphic inserts, advertisements
 
-### Example: The structure of a typical zine
+## Dictionary & Terms
 
-* title page
-* table of contents
-* letter from editor
-* short article
-* graphic insert
-* long article
-* short article
-* advertisements
+Indoctrinate supports domain-specific vocabularies. A **Dictionary** is a collection of terms with meanings specific to a particular content output structure. A **Term** is a single word in that dictionary.
 
-## Format
-
-There may be multiple Formats we want for an Output.  And there are many formats we can input.
-
-For writing out, we may want all three of HTML, LaTeX and raw text output for the same structure of our book.  Or maybe we have an open source C++ library that needs interactive documentation as well as a PDF output.  Formats are these different target types.
-
-## Output Material
-
-Our source material is passed through a structure, then generated as output material.
+For example, "class" might mean a group of students in one dictionary and an object-oriented programming construct in another. Indoctrinate treats vocabulary as a first-class citizen, allowing terms to be context-aware across different output structures.

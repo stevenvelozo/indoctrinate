@@ -9,6 +9,9 @@ const libIndoctrinateServiceInput = require(`./services/input/Indoctrinate-Servi
 const libIndoctrinateServiceProcessor = require(`./services/processor/Indoctrinate-Service-Processor.js`);
 const libIndoctrinateServiceOutput = require(`./services/output/Indoctrinate-Service-Output.js`);
 
+const libIndoctrinateRetoldCatalog = require(`./services/retold/Indoctrinate-Service-RetoldCatalog.js`);
+const libIndoctrinateRetoldKeywordIndex = require(`./services/retold/Indoctrinate-Service-RetoldKeywordIndex.js`);
+
 
 class IndoctrinateFableService extends libPict.ServiceProviderBase
 {
@@ -30,6 +33,9 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 
 		this.fable.addAndInstantiateServiceTypeIfNotExists('IndoctrinateServiceProcessor', libIndoctrinateServiceProcessor);
 		this.fable.addAndInstantiateServiceTypeIfNotExists('IndoctrinateServiceOutput', libIndoctrinateServiceOutput);
+
+		this.fable.addAndInstantiateServiceTypeIfNotExists('IndoctrinateRetoldCatalog', libIndoctrinateRetoldCatalog);
+		this.fable.addAndInstantiateServiceTypeIfNotExists('IndoctrinateRetoldKeywordIndex', libIndoctrinateRetoldKeywordIndex);
 
 		this.log.info('Constructed the Indoctrinate Fable Service.');
 	}
@@ -245,6 +251,146 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 		tmpAnticipate.anticipate(this.fable.IndoctrinateServiceProcessor.processContentCatalog.bind(this.fable.IndoctrinateServiceProcessor));
 		tmpAnticipate.anticipate(this.restoreCatalogWrites.bind(this));
 		this.endPhase(tmpAnticipate, 'Processing [Phase 2] Completed');
+
+		return tmpAnticipate.wait(fCallback);
+	}
+
+	generateCatalog(fCallback)
+	{
+		let tmpAnticipate = this.fable.newAnticipate();
+
+		this.beginPhase(tmpAnticipate, 'Retold Catalog Phase 0: Environment Preparation');
+		tmpAnticipate.anticipate(this.initializeServiceProviders.bind(this));
+		tmpAnticipate.anticipate(this.prepareConfigurations.bind(this));
+		tmpAnticipate.anticipate(this.prepareDestinationFolder.bind(this));
+		tmpAnticipate.anticipate(this.prepareStagingFolder.bind(this));
+		this.endPhase(tmpAnticipate, 'Preparation [Phase 0] Completed');
+
+		this.beginPhase(tmpAnticipate, 'Retold Catalog Phase 1: Scanning Module Documentation');
+		tmpAnticipate.anticipate(this.fable.IndoctrinateServiceInput.scan.bind(this.fable.IndoctrinateServiceInput));
+		tmpAnticipate.anticipate(this.fable.IndoctrinateServiceInput.scanExtraFiles.bind(this.fable.IndoctrinateServiceInput));
+		this.endPhase(tmpAnticipate, 'Scanning [Phase 1] Completed');
+
+		this.beginPhase(tmpAnticipate, 'Retold Catalog Phase 2: Building Documentation Catalog');
+		tmpAnticipate.anticipate(
+			function (fNext)
+			{
+				let tmpCatalogOptions = {
+					GitHubOrg: this.options.github_org || 'stevenvelozo',
+					DefaultBranch: this.options.branch || 'master'
+				};
+
+				this.fable.IndoctrinateRetoldCatalog.buildCatalog(tmpCatalogOptions,
+					function (pError, pCatalog)
+					{
+						if (pError)
+						{
+							return fNext(pError);
+						}
+
+						// Store the catalog for writing
+						this.retoldCatalog = pCatalog;
+						return fNext();
+					}.bind(this));
+			}.bind(this));
+		this.endPhase(tmpAnticipate, 'Building [Phase 2] Completed');
+
+		this.beginPhase(tmpAnticipate, 'Retold Catalog Phase 3: Writing Catalog JSON');
+		tmpAnticipate.anticipate(
+			function (fNext)
+			{
+				let tmpOutputPath = this.options.output_file || libPath.resolve(process.cwd(), 'retold-catalog.json');
+
+				this.fable.IndoctrinateRetoldCatalog.writeCatalog(this.retoldCatalog, tmpOutputPath, fNext);
+			}.bind(this));
+		this.endPhase(tmpAnticipate, 'Writing [Phase 3] Completed');
+
+		return tmpAnticipate.wait(fCallback);
+	}
+
+	generateKeywordIndex(fCallback)
+	{
+		let tmpAnticipate = this.fable.newAnticipate();
+
+		this.beginPhase(tmpAnticipate, 'Retold Keyword Index Phase 0: Environment Preparation');
+		tmpAnticipate.anticipate(this.initializeServiceProviders.bind(this));
+		tmpAnticipate.anticipate(this.prepareConfigurations.bind(this));
+		tmpAnticipate.anticipate(this.prepareDestinationFolder.bind(this));
+		tmpAnticipate.anticipate(this.prepareStagingFolder.bind(this));
+		this.endPhase(tmpAnticipate, 'Preparation [Phase 0] Completed');
+
+		this.beginPhase(tmpAnticipate, 'Retold Keyword Index Phase 1: Scanning Module Documentation');
+		tmpAnticipate.anticipate(this.fable.IndoctrinateServiceInput.scan.bind(this.fable.IndoctrinateServiceInput));
+		tmpAnticipate.anticipate(this.fable.IndoctrinateServiceInput.scanExtraFiles.bind(this.fable.IndoctrinateServiceInput));
+		this.endPhase(tmpAnticipate, 'Scanning [Phase 1] Completed');
+
+		this.beginPhase(tmpAnticipate, 'Retold Keyword Index Phase 2: Building Keyword Index');
+		tmpAnticipate.anticipate(
+			function (fNext)
+			{
+				this.fable.IndoctrinateRetoldKeywordIndex.buildKeywordIndex(
+					function (pError, pIndexResult)
+					{
+						if (pError)
+						{
+							return fNext(pError);
+						}
+
+						this.retoldKeywordIndex = pIndexResult;
+						return fNext();
+					}.bind(this));
+			}.bind(this));
+		this.endPhase(tmpAnticipate, 'Building [Phase 2] Completed');
+
+		this.beginPhase(tmpAnticipate, 'Retold Keyword Index Phase 3: Writing Index JSON');
+		tmpAnticipate.anticipate(
+			function (fNext)
+			{
+				let tmpOutputPath = this.options.output_file || libPath.resolve(process.cwd(), 'retold-keyword-index.json');
+
+				this.fable.IndoctrinateRetoldKeywordIndex.writeKeywordIndex(this.retoldKeywordIndex, tmpOutputPath, fNext);
+			}.bind(this));
+		this.endPhase(tmpAnticipate, 'Writing [Phase 3] Completed');
+
+		return tmpAnticipate.wait(fCallback);
+	}
+
+	generateKeywordIndexFromAppData(fCallback)
+	{
+		let tmpAnticipate = this.fable.newAnticipate();
+
+		this.beginPhase(tmpAnticipate, 'Retold Keyword Index Phase 0: Environment Preparation (from AppData)');
+		tmpAnticipate.anticipate(this.initializeServiceProviders.bind(this));
+		tmpAnticipate.anticipate(this.prepareConfigurations.bind(this));
+		this.endPhase(tmpAnticipate, 'Preparation [Phase 0] Completed');
+
+		this.beginPhase(tmpAnticipate, 'Retold Keyword Index Phase 1: Building Keyword Index from Existing Catalog');
+		tmpAnticipate.anticipate(
+			function (fNext)
+			{
+				this.fable.IndoctrinateRetoldKeywordIndex.buildKeywordIndex(
+					function (pError, pIndexResult)
+					{
+						if (pError)
+						{
+							return fNext(pError);
+						}
+
+						this.retoldKeywordIndex = pIndexResult;
+						return fNext();
+					}.bind(this));
+			}.bind(this));
+		this.endPhase(tmpAnticipate, 'Building [Phase 1] Completed');
+
+		this.beginPhase(tmpAnticipate, 'Retold Keyword Index Phase 2: Writing Index JSON');
+		tmpAnticipate.anticipate(
+			function (fNext)
+			{
+				let tmpOutputPath = this.options.output_file || libPath.resolve(process.cwd(), 'retold-keyword-index.json');
+
+				this.fable.IndoctrinateRetoldKeywordIndex.writeKeywordIndex(this.retoldKeywordIndex, tmpOutputPath, fNext);
+			}.bind(this));
+		this.endPhase(tmpAnticipate, 'Writing [Phase 2] Completed');
 
 		return tmpAnticipate.wait(fCallback);
 	}
