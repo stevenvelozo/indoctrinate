@@ -1,6 +1,6 @@
 {
     "name": "indoctrinate",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Documentation generation and indoctrination.",
     "main": "source/Indoctrinate-CLIProgram.js",
     "directories": {
