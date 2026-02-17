@@ -1,6 +1,6 @@
 {
     "name": "indoctrinate",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "Documentation generation and indoctrination.",
     "main": "source/Indoctrinate-CLIProgram.js",
     "directories": {
@@ -58,9 +58,9 @@
         "marked": "^15.0.12",
         "marked-tex-renderer": "^1.1.1",
         "mime": "^3.0.0",
-        "pict-service-commandlineutility": "^1.0.15"
+        "pict-service-commandlineutility": "^1.0.18"
     },
     "devDependencies": {
-        "quackage": "^1.0.41"
+        "quackage": "^1.0.48"
     }
 }

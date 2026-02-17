@@ -23,6 +23,7 @@ class GenerateKeywordIndex extends libCLICommandLineCommand
 		this.options.Description = 'Generate a keyword search index from Retold module documentation.';
 
 		this.options.CommandOptions.push({ Name: '-d, --directory_root [directory_root]', Description: 'The root directory of the retold modules folder.  Defaults to CWD.' });
+		this.options.CommandOptions.push({ Name: '-e, --extra_scan [extra_scan]', Description: 'Additional directory to scan (e.g. docs folder for local content).' });
 		this.options.CommandOptions.push({ Name: '-o, --output_file [output_file]', Description: 'The output file path for the keyword index JSON.  Defaults to ./retold-keyword-index.json.' });
 		this.options.CommandOptions.push({ Name: '-a, --appdata_file [appdata_file]', Description: 'Load a previously saved AppData JSON instead of re-scanning.' });
 		this.options.CommandOptions.push({ Name: '-c, --catalog_file', Description: 'Write out the catalog Application Data file.' });
@@ -59,6 +60,15 @@ class GenerateKeywordIndex extends libCLICommandLineCommand
 			{
 				tmpCommandOptions.output_file = libPath.resolve(tmpCommandOptions.output_file);
 			}
+		}
+
+		// Resolve extra_scan directory and add it to AdditionalScanFolders
+		if (tmpCommandOptions.extra_scan && tmpCommandOptions.extra_scan !== '')
+		{
+			let tmpExtraScan = libPath.isAbsolute(tmpCommandOptions.extra_scan)
+				? tmpCommandOptions.extra_scan
+				: libPath.resolve(tmpCommandOptions.extra_scan);
+			this.fable.AppData.AdditionalScanFolders = [tmpExtraScan];
 		}
 
 		let tmpIndoctrinate = this.fable.serviceManager.instantiateServiceProvider('Indoctrinate', this.CommandOptions);
