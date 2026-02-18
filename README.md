@@ -45,3 +45,15 @@ jq '.SourceContentCatalog[]' dist/indoctrinate_content_staging/Indoctrinate-Cata
 ## Fast MD5
 
 https://www.npmjs.com/package/hash-wasm
+
+## Related Packages
+
+- [fable](https://github.com/stevenvelozo/fable) - Application services framework
+
+## License
+
+MIT
+
+## Contributing
+
+Pull requests are welcome. For details on our code of conduct, contribution process, and testing requirements, see the [Retold Contributing Guide](https://github.com/stevenvelozo/retold/blob/main/docs/contributing.md).

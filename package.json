@@ -61,6 +61,6 @@
         "pict-service-commandlineutility": "^1.0.18"
     },
     "devDependencies": {
-        "quackage": "^1.0.48"
+        "quackage": "^1.0.51"
     }
 }

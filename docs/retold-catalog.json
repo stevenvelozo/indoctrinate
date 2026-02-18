@@ -1,0 +1,340 @@
+{
+	"Generated": "2026-02-18T03:11:00.779Z",
+	"GitHubOrg": "stevenvelozo",
+	"DefaultBranch": "master",
+	"Groups": [
+		{
+			"Name": ".config",
+			"Key": ".config",
+			"Description": "",
+			"Modules": [
+				{
+					"Name": "code-server",
+					"Repo": "code-server",
+					"Group": ".config",
+					"Branch": "master",
+					"HasDocs": false,
+					"HasCover": false,
+					"Sidebar": [],
+					"DocFiles": []
+				},
+				{
+					"Name": "indoctrinate",
+					"Repo": "indoctrinate",
+					"Group": ".config",
+					"Branch": "master",
+					"HasDocs": false,
+					"HasCover": false,
+					"Sidebar": [],
+					"DocFiles": []
+				}
+			]
+		},
+		{
+			"Name": "Coverage",
+			"Key": "coverage",
+			"Description": "",
+			"Modules": [
+				{
+					"Name": "lcov-report",
+					"Repo": "lcov-report",
+					"Group": "coverage",
+					"Branch": "master",
+					"HasDocs": false,
+					"HasCover": false,
+					"Sidebar": [],
+					"DocFiles": []
+				}
+			]
+		},
+		{
+			"Name": "Debug",
+			"Key": "debug",
+			"Description": "",
+			"Modules": [
+				{
+					"Name": "dist",
+					"Repo": "dist",
+					"Group": "debug",
+					"Branch": "master",
+					"HasDocs": false,
+					"HasCover": false,
+					"Sidebar": [],
+					"DocFiles": []
+				}
+			]
+		},
+		{
+			"Name": "Dist",
+			"Key": "dist",
+			"Description": "",
+			"Modules": [
+				{
+					"Name": "indoctrinate_content_staging",
+					"Repo": "indoctrinate_content_staging",
+					"Group": "dist",
+					"Branch": "master",
+					"HasDocs": false,
+					"HasCover": false,
+					"Sidebar": [],
+					"DocFiles": []
+				},
+				{
+					"Name": "unit_tests",
+					"Repo": "unit_tests",
+					"Group": "dist",
+					"Branch": "master",
+					"HasDocs": false,
+					"HasCover": false,
+					"Sidebar": [],
+					"DocFiles": []
+				}
+			]
+		},
+		{
+			"Name": "Docs",
+			"Key": "docs",
+			"Description": "",
+			"Modules": [
+				{
+					"Name": "commands",
+					"Repo": "commands",
+					"Group": "docs",
+					"Branch": "master",
+					"HasDocs": true,
+					"HasCover": false,
+					"Sidebar": [],
+					"DocFiles": [
+						"commands/README.md",
+						"commands/compile.md",
+						"commands/extended-process.md",
+						"commands/generate-catalog.md",
+						"commands/generate-keyword-index.md"
+					]
+				},
+				{
+					"Name": "compiler",
+					"Repo": "compiler",
+					"Group": "docs",
+					"Branch": "master",
+					"HasDocs": true,
+					"HasCover": false,
+					"Sidebar": [],
+					"DocFiles": [
+						"compiler/040_generate/Dot.md",
+						"compiler/040_generate/KaTeX.md",
+						"compiler/040_generate/LaTeX.md",
+						"compiler/040_generate/Mermaid.md",
+						"compiler/040_generate/NodePackageDescription.md",
+						"compiler/040_generate/Shiki.md"
+					]
+				},
+				{
+					"Name": "concepts",
+					"Repo": "concepts",
+					"Group": "docs",
+					"Branch": "master",
+					"HasDocs": true,
+					"HasCover": false,
+					"Sidebar": [],
+					"DocFiles": [
+						"concepts/catalog-filtering.md",
+						"concepts/content-descriptions.md",
+						"concepts/labels.md"
+					]
+				},
+				{
+					"Name": "configuration",
+					"Repo": "configuration",
+					"Group": "docs",
+					"Branch": "master",
+					"HasDocs": true,
+					"HasCover": false,
+					"Sidebar": [],
+					"DocFiles": [
+						"configuration/README.md",
+						"configuration/special-files.md",
+						"configuration/structures-targets.md"
+					]
+				},
+				{
+					"Name": "design",
+					"Repo": "design",
+					"Group": "docs",
+					"Branch": "master",
+					"HasDocs": true,
+					"HasCover": false,
+					"Sidebar": [],
+					"DocFiles": [
+						"design/labels.md",
+						"design/overview.md"
+					]
+				},
+				{
+					"Name": "examples",
+					"Repo": "examples",
+					"Group": "docs",
+					"Branch": "master",
+					"HasDocs": true,
+					"HasCover": false,
+					"Sidebar": [],
+					"DocFiles": [
+						"examples/README.md",
+						"examples/book/README.md",
+						"examples/book/Vocabulary.md",
+						"examples/book/chapters/01/000-Fish.md",
+						"examples/book/chapters/02/000-FreshwaterFish.md",
+						"examples/book/chapters/02/Salmon.md",
+						"examples/book/chapters/03/000-SaltwaterFish.md",
+						"examples/book/chapters/04/000-FishThatWorkInBoth.md",
+						"examples/book/chapters/05/000-FishAsFood.md",
+						"examples/book/chapters/06/000-FishAsFriends.md",
+						"examples/book/frontmatter/Fish-Clipart.png",
+						"examples/book/frontmatter/Foreward.md",
+						"examples/book/indoctrinate-structure.json",
+						"examples/data_model/Platform.md",
+						"examples/data_model/indoctrinate.json",
+						"examples/data_model/model/MeadowModel-Extended.json",
+						"examples/data_model/model/entity/animals/Author.md",
+						"examples/data_model/model/entity/animals/Cat.md",
+						"examples/data_model/model/entity/clinics/Book.md",
+						"examples/data_model/model/entity/clinics/Vet.md",
+						"examples/data_model/model/entity_abstractions/animals.md",
+						"examples/document/Body.md",
+						"examples/document/Introduction.md",
+						"examples/document/indoctrinate.json",
+						"examples/monorepo/indoctrinate-extrafolders.json"
+					]
+				},
+				{
+					"Name": "pipeline",
+					"Repo": "pipeline",
+					"Group": "docs",
+					"Branch": "master",
+					"HasDocs": true,
+					"HasCover": false,
+					"Sidebar": [],
+					"DocFiles": [
+						"pipeline/README.md",
+						"pipeline/input.md",
+						"pipeline/output.md",
+						"pipeline/processing.md"
+					]
+				},
+				{
+					"Name": "retold",
+					"Repo": "retold",
+					"Group": "docs",
+					"Branch": "master",
+					"HasDocs": true,
+					"HasCover": false,
+					"Sidebar": [],
+					"DocFiles": [
+						"retold/README.md",
+						"retold/catalog-generation.md",
+						"retold/keyword-index.md"
+					]
+				}
+			]
+		},
+		{
+			"Name": "Format_templates",
+			"Key": "format_templates",
+			"Description": "",
+			"Modules": [
+				{
+					"Name": "repository_documentation",
+					"Repo": "repository_documentation",
+					"Group": "format_templates",
+					"Branch": "master",
+					"HasDocs": false,
+					"HasCover": false,
+					"Sidebar": [],
+					"DocFiles": []
+				}
+			]
+		},
+		{
+			"Name": "Source",
+			"Key": "source",
+			"Description": "",
+			"Modules": [
+				{
+					"Name": "commands",
+					"Repo": "commands",
+					"Group": "source",
+					"Branch": "master",
+					"HasDocs": false,
+					"HasCover": false,
+					"Sidebar": [],
+					"DocFiles": []
+				},
+				{
+					"Name": "services",
+					"Repo": "services",
+					"Group": "source",
+					"Branch": "master",
+					"HasDocs": false,
+					"HasCover": false,
+					"Sidebar": [],
+					"DocFiles": []
+				}
+			]
+		},
+		{
+			"Name": "Test",
+			"Key": "test",
+			"Description": "",
+			"Modules": [
+				{
+					"Name": "test_data",
+					"Repo": "test_data",
+					"Group": "test",
+					"Branch": "master",
+					"HasDocs": true,
+					"HasCover": true,
+					"Sidebar": [
+						{
+							"Title": "Getting Started",
+							"Children": [
+								{
+									"Title": "Introduction",
+									"Path": "README.md"
+								},
+								{
+									"Title": "Architecture",
+									"Path": "architecture.md"
+								}
+							]
+						},
+						{
+							"Title": "Core Concepts",
+							"Children": [
+								{
+									"Title": "Schema",
+									"Path": "api/schema.md"
+								},
+								{
+									"Title": "CRUD Operations",
+									"Path": "api/crud.md"
+								}
+							]
+						}
+					],
+					"DocFiles": [
+						"README.md",
+						"_sidebar.md",
+						"configuration.md",
+						"cover.md",
+						"getting-started.md",
+						"README.md",
+						"_sidebar.md",
+						"api/crud.md",
+						"api/schema.md",
+						"architecture.md"
+					]
+				}
+			]
+		}
+	]
+}
