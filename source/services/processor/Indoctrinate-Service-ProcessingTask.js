@@ -2,6 +2,7 @@ const libPictServiceCommandLineUtility = require('pict-service-commandlineutilit
 
 const libFS = require('fs');
 const libPath = require('path');
+const libCrypto = require('crypto');
 
 class IndoctrinateServiceProcessingTask extends libPictServiceCommandLineUtility.ServiceProviderBase
 {
@@ -16,14 +17,32 @@ class IndoctrinateServiceProcessingTask extends libPictServiceCommandLineUtility
 	{
 		const tmpFileName = this.constructFileName(pContentDescription);
 		const tmpFileDescriptor = libFS.openSync(tmpFileName, 'r');
-		// Manually create a buffer to store the bytes
-		const tmpByteBuffer = Buffer.alloc(100);
-		// Read the first n bytes
-		libFS.readSync(tmpFileDescriptor, tmpByteBuffer, pStartByte, pLength, pStartByte);
-		// Manually close the file descriptor
+		const tmpByteBuffer = Buffer.alloc(pLength);
+		libFS.readSync(tmpFileDescriptor, tmpByteBuffer, 0, pLength, pStartByte);
 		libFS.closeSync(tmpFileDescriptor);
-		// Now return the byte buffer
 		return tmpByteBuffer;
+	}
+
+	readTailBytesSync(pContentDescription, pLength)
+	{
+		const tmpFileName = this.constructFileName(pContentDescription);
+		const tmpStat = libFS.statSync(tmpFileName);
+		let tmpActualLength = pLength;
+		if (tmpStat.size < tmpActualLength)
+		{
+			tmpActualLength = tmpStat.size;
+		}
+		const tmpStartByte = tmpStat.size - tmpActualLength;
+		return this.readBytesSync(pContentDescription, tmpStartByte, tmpActualLength);
+	}
+
+	computeMD5Sync(pContentDescription)
+	{
+		const tmpFileName = this.constructFileName(pContentDescription);
+		const tmpHash = libCrypto.createHash('md5');
+		const tmpBuffer = libFS.readFileSync(tmpFileName);
+		tmpHash.update(tmpBuffer);
+		return tmpHash.digest('hex');
 	}
 
 	constructFileName(pContentDescription)

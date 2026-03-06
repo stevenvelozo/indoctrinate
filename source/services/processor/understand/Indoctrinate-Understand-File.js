@@ -41,6 +41,30 @@ class IndoctrinateUnderstandFile extends libIndoctrinateProcessingTask
 		}
 		// This is to save bytes in ginormous json.
 		this.addContentToExtendedCatalogData(pContentDescription, tmpMagicByteData, 'MB_MIME');
+
+		// Read the last 100 bytes of the file (tail signature)
+		try
+		{
+			let tmpTailBytes = this.readTailBytesSync(pContentDescription, 100);
+			this.addContentToExtendedCatalogData(pContentDescription, tmpTailBytes.toString('hex'), 'MB_TAIL');
+		}
+		catch (pTailError)
+		{
+			console.log(`  > Could not read tail bytes: ${pTailError.message}`);
+		}
+
+		// Compute MD5 hash of the file
+		try
+		{
+			let tmpMD5 = this.computeMD5Sync(pContentDescription);
+			console.log(`  > MD5: ${tmpMD5}`);
+			this.addContentToExtendedCatalogData(pContentDescription, tmpMD5, 'FILE_MD5');
+		}
+		catch (pMD5Error)
+		{
+			console.log(`  > Could not compute MD5: ${pMD5Error.message}`);
+		}
+
 		return fCallback();
 	}
 }

@@ -1,6 +1,9 @@
 const libPictServiceCommandLineUtility = require('pict-service-commandlineutility');
 
 const libIndoctrinateUnderstandFile = require('./understand/Indoctrinate-Understand-File.js');
+const libIndoctrinateUnderstandVideo = require('./understand/nature/Indoctrinate-Understand-Video.js');
+const libIndoctrinateUnderstandAudio = require('./understand/nature/Indoctrinate-Understand-Audio.js');
+const libIndoctrinateUnderstandImage = require('./understand/nature/Indoctrinate-Understand-Image.js');
 
 class IndoctrinateServiceProcessor extends libPictServiceCommandLineUtility.ServiceProviderBase
 {
@@ -15,6 +18,15 @@ class IndoctrinateServiceProcessor extends libPictServiceCommandLineUtility.Serv
 		this.fable.addServiceTypeIfNotExists('IndoctrinateProcessorUnderstandFile', libIndoctrinateUnderstandFile);
 
 		this.processingTasks.push(this.fable.instantiateServiceProviderWithoutRegistration('IndoctrinateProcessorUnderstandFile'));
+
+		this.fable.addServiceTypeIfNotExists('IndoctrinateProcessorUnderstandVideo', libIndoctrinateUnderstandVideo);
+		this.processingTasks.push(this.fable.instantiateServiceProviderWithoutRegistration('IndoctrinateProcessorUnderstandVideo'));
+
+		this.fable.addServiceTypeIfNotExists('IndoctrinateProcessorUnderstandAudio', libIndoctrinateUnderstandAudio);
+		this.processingTasks.push(this.fable.instantiateServiceProviderWithoutRegistration('IndoctrinateProcessorUnderstandAudio'));
+
+		this.fable.addServiceTypeIfNotExists('IndoctrinateProcessorUnderstandImage', libIndoctrinateUnderstandImage);
+		this.processingTasks.push(this.fable.instantiateServiceProviderWithoutRegistration('IndoctrinateProcessorUnderstandImage'));
 
 		this.log.info('Constructed Processor Service.');
 	}
