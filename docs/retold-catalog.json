@@ -1,5 +1,5 @@
 {
-	"Generated": "2026-02-18T03:11:00.779Z",
+	"Generated": "2026-04-09T23:24:26.191Z",
 	"GitHubOrg": "stevenvelozo",
 	"DefaultBranch": "master",
 	"Groups": [
@@ -22,40 +22,6 @@
 					"Name": "indoctrinate",
 					"Repo": "indoctrinate",
 					"Group": ".config",
-					"Branch": "master",
-					"HasDocs": false,
-					"HasCover": false,
-					"Sidebar": [],
-					"DocFiles": []
-				}
-			]
-		},
-		{
-			"Name": "Coverage",
-			"Key": "coverage",
-			"Description": "",
-			"Modules": [
-				{
-					"Name": "lcov-report",
-					"Repo": "lcov-report",
-					"Group": "coverage",
-					"Branch": "master",
-					"HasDocs": false,
-					"HasCover": false,
-					"Sidebar": [],
-					"DocFiles": []
-				}
-			]
-		},
-		{
-			"Name": "Debug",
-			"Key": "debug",
-			"Description": "",
-			"Modules": [
-				{
-					"Name": "dist",
-					"Repo": "dist",
-					"Group": "debug",
 					"Branch": "master",
 					"HasDocs": false,
 					"HasCover": false,
@@ -155,6 +121,18 @@
 						"configuration/README.md",
 						"configuration/special-files.md",
 						"configuration/structures-targets.md"
+					]
+				},
+				{
+					"Name": "css",
+					"Repo": "css",
+					"Group": "docs",
+					"Branch": "master",
+					"HasDocs": true,
+					"HasCover": false,
+					"Sidebar": [],
+					"DocFiles": [
+						"css/docuserve.css"
 					]
 				},
 				{
