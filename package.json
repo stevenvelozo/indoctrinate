@@ -1,6 +1,6 @@
 {
     "name": "indoctrinate",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "description": "Documentation generation and indoctrination.",
     "main": "source/Indoctrinate-CLIProgram.js",
     "directories": {
@@ -62,6 +62,6 @@
         "pict-service-commandlineutility": "^1.0.19"
     },
     "devDependencies": {
-        "quackage": "^1.0.59"
+        "quackage": "^1.0.66"
     }
 }
