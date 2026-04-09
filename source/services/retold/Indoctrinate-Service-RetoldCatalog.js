@@ -296,13 +296,33 @@ class IndoctrinateRetoldCatalog extends libPict.ServiceProviderBase
 	/**
 	 * Build the unified Retold documentation catalog from the content catalog.
 	 *
-	 * @param {object} pOptions - { GitHubOrg, DefaultBranch }
+	 * @param {object} pOptions - { GitHubOrg, DefaultBranch, ExcludedModules }
+	 *   ExcludedModules: optional array of module names to skip entirely
+	 *                    (e.g., ["retold-remote-desktop", "retold-remote-ios"])
 	 * @param {function} fCallback - Callback(error, catalog)
 	 */
 	buildCatalog(pOptions, fCallback)
 	{
 		let tmpGitHubOrg = (pOptions && pOptions.GitHubOrg) ? pOptions.GitHubOrg : 'stevenvelozo';
 		let tmpDefaultBranch = (pOptions && pOptions.DefaultBranch) ? pOptions.DefaultBranch : 'master';
+
+		// Exclusion set: any module whose Name is in this set is dropped
+		// before it can be recorded in the catalog. Defaults to empty.
+		let tmpExcludedModulesSet = new Set();
+		if (pOptions && Array.isArray(pOptions.ExcludedModules))
+		{
+			for (let i = 0; i < pOptions.ExcludedModules.length; i++)
+			{
+				if (typeof(pOptions.ExcludedModules[i]) === 'string' && pOptions.ExcludedModules[i].length > 0)
+				{
+					tmpExcludedModulesSet.add(pOptions.ExcludedModules[i]);
+				}
+			}
+		}
+		if (tmpExcludedModulesSet.size > 0)
+		{
+			this.log.info(`Excluding ${tmpExcludedModulesSet.size} module(s) from catalog: [${Array.from(tmpExcludedModulesSet).join(', ')}]`);
+		}
 
 		let tmpCatalog = this.fable.AppData.SourceContentCatalog;
 
@@ -317,6 +337,7 @@ class IndoctrinateRetoldCatalog extends libPict.ServiceProviderBase
 
 		// First pass: discover all modules and their doc files
 		let tmpModulesMap = {};
+		let tmpSkippedCount = 0;
 
 		for (let i = 0; i < tmpCatalogIndices.length; i++)
 		{
@@ -325,6 +346,13 @@ class IndoctrinateRetoldCatalog extends libPict.ServiceProviderBase
 
 			if (!tmpGroupModule)
 			{
+				continue;
+			}
+
+			// Skip any excluded modules — they never enter the catalog
+			if (tmpExcludedModulesSet.has(tmpGroupModule.Module))
+			{
+				tmpSkippedCount++;
 				continue;
 			}
 
@@ -438,7 +466,14 @@ class IndoctrinateRetoldCatalog extends libPict.ServiceProviderBase
 			Groups: tmpGroups
 		};
 
-		this.log.info(`Catalog built: ${tmpGroups.length} groups, ${tmpModuleKeys.length} modules discovered.`);
+		if (tmpSkippedCount > 0)
+		{
+			this.log.info(`Catalog built: ${tmpGroups.length} groups, ${tmpModuleKeys.length} modules discovered, ${tmpSkippedCount} content entries skipped due to exclusion list.`);
+		}
+		else
+		{
+			this.log.info(`Catalog built: ${tmpGroups.length} groups, ${tmpModuleKeys.length} modules discovered.`);
+		}
 
 		return fCallback(null, tmpResult);
 	}

@@ -26,6 +26,7 @@ class GenerateCatalog extends libCLICommandLineCommand
 		this.options.CommandOptions.push({ Name: '-b, --branch [branch]', Description: 'The default git branch for GitHub raw URLs.  Defaults to master.' });
 		this.options.CommandOptions.push({ Name: '-g, --github_org [github_org]', Description: 'The GitHub organization or user for raw URLs.  Defaults to stevenvelozo.' });
 		this.options.CommandOptions.push({ Name: '-c, --catalog_file', Description: 'Write out the catalog Application Data file (this might be pretty big).' });
+		this.options.CommandOptions.push({ Name: '-x, --excluded_modules [excluded_modules]', Description: 'Comma-separated list of module names to exclude from the catalog (e.g. "retold-remote-desktop,retold-remote-ios").  Merged with any ExcludedModules list in the loaded config file.' });
 
 		this.addCommand();
 	}
@@ -71,6 +72,35 @@ class GenerateCatalog extends libCLICommandLineCommand
 		{
 			tmpCommandOptions.github_org = 'stevenvelozo';
 		}
+
+		// Resolve ExcludedModules from the auto-gathered config file plus any
+		// CLI flag.  This ends up as an already-resolved array on the command
+		// options so the Indoctrinate service can read it directly.
+		let tmpExcludedModules = [];
+		if (this.pict && this.pict.ProgramConfiguration && Array.isArray(this.pict.ProgramConfiguration.ExcludedModules))
+		{
+			for (let i = 0; i < this.pict.ProgramConfiguration.ExcludedModules.length; i++)
+			{
+				let tmpEntry = this.pict.ProgramConfiguration.ExcludedModules[i];
+				if (typeof(tmpEntry) === 'string' && tmpEntry.length > 0 && tmpExcludedModules.indexOf(tmpEntry) < 0)
+				{
+					tmpExcludedModules.push(tmpEntry);
+				}
+			}
+		}
+		if (typeof(tmpCommandOptions.excluded_modules) === 'string' && tmpCommandOptions.excluded_modules.length > 0)
+		{
+			let tmpCLIParts = tmpCommandOptions.excluded_modules.split(',');
+			for (let i = 0; i < tmpCLIParts.length; i++)
+			{
+				let tmpCLIEntry = tmpCLIParts[i].trim();
+				if (tmpCLIEntry.length > 0 && tmpExcludedModules.indexOf(tmpCLIEntry) < 0)
+				{
+					tmpExcludedModules.push(tmpCLIEntry);
+				}
+			}
+		}
+		tmpCommandOptions.ExcludedModules = tmpExcludedModules;
 
 		let tmpIndoctrinate = this.fable.serviceManager.instantiateServiceProvider('Indoctrinate', this.CommandOptions);
 

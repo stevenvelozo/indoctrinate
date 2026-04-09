@@ -9,6 +9,8 @@
 
 	"IgnoredFileNames": ["node_modules", ".git", ".DS_Store", ".nyc_output"],
 
+	"ExcludedModules": [],
+
 	"RootScanFolder": false,
 	"AdditionalScanFolders": [],
 

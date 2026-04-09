@@ -255,6 +255,64 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 		return tmpAnticipate.wait(fCallback);
 	}
 
+	/**
+	 * Resolve the list of modules to exclude from catalog / keyword-index
+	 * generation. Sources are merged with this priority order:
+	 *
+	 *   1. CLI flag (comma-separated string) via `this.options.excluded_modules`
+	 *   2. Config file array via `this.fable.settings.ExcludedModules`
+	 *   3. Empty array (no exclusions)
+	 *
+	 * The CLI flag is parsed from its comma-separated string form to an array
+	 * of trimmed non-empty strings. The returned array is the union of all
+	 * sources with duplicates removed.
+	 *
+	 * @returns {string[]} Array of module names to exclude
+	 */
+	resolveExcludedModules()
+	{
+		let tmpExclusions = new Set();
+
+		// CLI flag — comma-separated string, parse into entries
+		if (this.options && typeof(this.options.excluded_modules) === 'string' && this.options.excluded_modules.length > 0)
+		{
+			let tmpParts = this.options.excluded_modules.split(',');
+			for (let i = 0; i < tmpParts.length; i++)
+			{
+				let tmpPart = tmpParts[i].trim();
+				if (tmpPart.length > 0)
+				{
+					tmpExclusions.add(tmpPart);
+				}
+			}
+		}
+		// Also accept an already-parsed array form on options
+		if (this.options && Array.isArray(this.options.ExcludedModules))
+		{
+			for (let i = 0; i < this.options.ExcludedModules.length; i++)
+			{
+				if (typeof(this.options.ExcludedModules[i]) === 'string' && this.options.ExcludedModules[i].length > 0)
+				{
+					tmpExclusions.add(this.options.ExcludedModules[i]);
+				}
+			}
+		}
+
+		// Fable settings (loaded from .indoctrinate.config.json by pict-service-commandlineutility)
+		if (this.fable.settings && Array.isArray(this.fable.settings.ExcludedModules))
+		{
+			for (let i = 0; i < this.fable.settings.ExcludedModules.length; i++)
+			{
+				if (typeof(this.fable.settings.ExcludedModules[i]) === 'string' && this.fable.settings.ExcludedModules[i].length > 0)
+				{
+					tmpExclusions.add(this.fable.settings.ExcludedModules[i]);
+				}
+			}
+		}
+
+		return Array.from(tmpExclusions);
+	}
+
 	generateCatalog(fCallback)
 	{
 		let tmpAnticipate = this.fable.newAnticipate();
@@ -277,7 +335,8 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 			{
 				let tmpCatalogOptions = {
 					GitHubOrg: this.options.github_org || 'stevenvelozo',
-					DefaultBranch: this.options.branch || 'master'
+					DefaultBranch: this.options.branch || 'master',
+					ExcludedModules: this.resolveExcludedModules()
 				};
 
 				this.fable.IndoctrinateRetoldCatalog.buildCatalog(tmpCatalogOptions,
@@ -328,7 +387,11 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 		tmpAnticipate.anticipate(
 			function (fNext)
 			{
-				this.fable.IndoctrinateRetoldKeywordIndex.buildKeywordIndex(
+				let tmpKeywordIndexOptions = {
+					ExcludedModules: this.resolveExcludedModules()
+				};
+
+				this.fable.IndoctrinateRetoldKeywordIndex.buildKeywordIndex(tmpKeywordIndexOptions,
 					function (pError, pIndexResult)
 					{
 						if (pError)
@@ -368,7 +431,11 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 		tmpAnticipate.anticipate(
 			function (fNext)
 			{
-				this.fable.IndoctrinateRetoldKeywordIndex.buildKeywordIndex(
+				let tmpKeywordIndexOptions = {
+					ExcludedModules: this.resolveExcludedModules()
+				};
+
+				this.fable.IndoctrinateRetoldKeywordIndex.buildKeywordIndex(tmpKeywordIndexOptions,
 					function (pError, pIndexResult)
 					{
 						if (pError)

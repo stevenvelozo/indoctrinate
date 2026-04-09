@@ -27,6 +27,7 @@ class GenerateKeywordIndex extends libCLICommandLineCommand
 		this.options.CommandOptions.push({ Name: '-o, --output_file [output_file]', Description: 'The output file path for the keyword index JSON.  Defaults to ./retold-keyword-index.json.' });
 		this.options.CommandOptions.push({ Name: '-a, --appdata_file [appdata_file]', Description: 'Load a previously saved AppData JSON instead of re-scanning.' });
 		this.options.CommandOptions.push({ Name: '-c, --catalog_file', Description: 'Write out the catalog Application Data file.' });
+		this.options.CommandOptions.push({ Name: '-x, --excluded_modules [excluded_modules]', Description: 'Comma-separated list of module names to exclude from the keyword index (e.g. "retold-remote-desktop,retold-remote-ios").  Merged with any ExcludedModules list in the loaded config file.' });
 
 		this.addCommand();
 	}
@@ -70,6 +71,35 @@ class GenerateKeywordIndex extends libCLICommandLineCommand
 				: libPath.resolve(tmpCommandOptions.extra_scan);
 			this.fable.AppData.AdditionalScanFolders = [tmpExtraScan];
 		}
+
+		// Resolve ExcludedModules from the auto-gathered config file plus any
+		// CLI flag.  This ends up as an already-resolved array on the command
+		// options so the Indoctrinate service can read it directly.
+		let tmpExcludedModules = [];
+		if (this.pict && this.pict.ProgramConfiguration && Array.isArray(this.pict.ProgramConfiguration.ExcludedModules))
+		{
+			for (let i = 0; i < this.pict.ProgramConfiguration.ExcludedModules.length; i++)
+			{
+				let tmpEntry = this.pict.ProgramConfiguration.ExcludedModules[i];
+				if (typeof(tmpEntry) === 'string' && tmpEntry.length > 0 && tmpExcludedModules.indexOf(tmpEntry) < 0)
+				{
+					tmpExcludedModules.push(tmpEntry);
+				}
+			}
+		}
+		if (typeof(tmpCommandOptions.excluded_modules) === 'string' && tmpCommandOptions.excluded_modules.length > 0)
+		{
+			let tmpCLIParts = tmpCommandOptions.excluded_modules.split(',');
+			for (let i = 0; i < tmpCLIParts.length; i++)
+			{
+				let tmpCLIEntry = tmpCLIParts[i].trim();
+				if (tmpCLIEntry.length > 0 && tmpExcludedModules.indexOf(tmpCLIEntry) < 0)
+				{
+					tmpExcludedModules.push(tmpCLIEntry);
+				}
+			}
+		}
+		tmpCommandOptions.ExcludedModules = tmpExcludedModules;
 
 		let tmpIndoctrinate = this.fable.serviceManager.instantiateServiceProvider('Indoctrinate', this.CommandOptions);
 

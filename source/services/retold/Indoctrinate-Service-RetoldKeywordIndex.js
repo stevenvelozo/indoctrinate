@@ -169,10 +169,42 @@ class IndoctrinateRetoldKeywordIndex extends libPict.ServiceProviderBase
 	/**
 	 * Build the keyword index from all markdown content in the catalog.
 	 *
-	 * @param {function} fCallback - Callback(error, indexResult)
+	 * @param {object|function} pOptions - Options object, or (legacy) the callback
+	 *   ExcludedModules: optional array of module names to skip entirely
+	 *                    (e.g., ["retold-remote-desktop", "retold-remote-ios"])
+	 * @param {function} [fCallback] - Callback(error, indexResult)
 	 */
-	buildKeywordIndex(fCallback)
+	buildKeywordIndex(pOptions, fCallback)
 	{
+		// Backwards-compatible single-argument call: buildKeywordIndex(fCallback)
+		if (typeof(pOptions) === 'function' && typeof(fCallback) === 'undefined')
+		{
+			fCallback = pOptions;
+			pOptions = {};
+		}
+		if (!pOptions || typeof(pOptions) !== 'object')
+		{
+			pOptions = {};
+		}
+
+		// Exclusion set: any module whose Name is in this set is dropped
+		// before its docs can be added to the search index.
+		let tmpExcludedModulesSet = new Set();
+		if (Array.isArray(pOptions.ExcludedModules))
+		{
+			for (let i = 0; i < pOptions.ExcludedModules.length; i++)
+			{
+				if (typeof(pOptions.ExcludedModules[i]) === 'string' && pOptions.ExcludedModules[i].length > 0)
+				{
+					tmpExcludedModulesSet.add(pOptions.ExcludedModules[i]);
+				}
+			}
+		}
+		if (tmpExcludedModulesSet.size > 0)
+		{
+			this.log.info(`Excluding ${tmpExcludedModulesSet.size} module(s) from keyword index: [${Array.from(tmpExcludedModulesSet).join(', ')}]`);
+		}
+
 		let tmpCatalog = this.fable.AppData.SourceContentCatalog;
 
 		if (!tmpCatalog || typeof(tmpCatalog) !== 'object')
@@ -187,6 +219,7 @@ class IndoctrinateRetoldKeywordIndex extends libPict.ServiceProviderBase
 		// Collect all markdown documents that have content and are in a docs/ folder
 		let tmpDocuments = {};
 		let tmpLunrDocs = [];
+		let tmpSkippedCount = 0;
 
 		for (let i = 0; i < tmpCatalogIndices.length; i++)
 		{
@@ -201,6 +234,13 @@ class IndoctrinateRetoldKeywordIndex extends libPict.ServiceProviderBase
 			let tmpGroupModule = this.extractGroupAndModule(tmpContentDescription);
 			if (!tmpGroupModule)
 			{
+				continue;
+			}
+
+			// Skip any excluded modules — they never enter the search index
+			if (tmpExcludedModulesSet.has(tmpGroupModule.Module))
+			{
+				tmpSkippedCount++;
 				continue;
 			}
 
@@ -266,7 +306,14 @@ class IndoctrinateRetoldKeywordIndex extends libPict.ServiceProviderBase
 			Documents: tmpDocuments
 		};
 
-		this.log.info(`Keyword index built: ${tmpLunrDocs.length} documents indexed.`);
+		if (tmpSkippedCount > 0)
+		{
+			this.log.info(`Keyword index built: ${tmpLunrDocs.length} documents indexed, ${tmpSkippedCount} content entries skipped due to exclusion list.`);
+		}
+		else
+		{
+			this.log.info(`Keyword index built: ${tmpLunrDocs.length} documents indexed.`);
+		}
 
 		return fCallback(null, tmpResult);
 	}
