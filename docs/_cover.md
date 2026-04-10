@@ -1,4 +1,4 @@
-# Indoctrinate <small>1</small>
+# Indoctrinate
 
 > A content cataloging, processing, and documentation generation system
 
