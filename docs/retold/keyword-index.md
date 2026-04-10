@@ -26,12 +26,12 @@ Content is stripped of formatting before indexing to improve search quality:
 | Fenced code blocks | ` ```js ... ``` ` |
 | Inline code | `` `variable` `` |
 | Image references | `![alt](url)` |
-| Link URLs | `[text](url)` → `text` |
+| Link URLs | `[text](url)` -> `text` |
 | HTML tags | `<div>...</div>` |
-| Header markers | `# Title` → `Title` |
-| Emphasis | `**bold**` → `bold` |
-| List markers | `- item` → `item` |
-| Blockquotes | `> text` → `text` |
+| Header markers | `# Title` -> `Title` |
+| Emphasis | `**bold**` -> `bold` |
+| List markers | `- item` -> `item` |
+| Blockquotes | `> text` -> `text` |
 | Horizontal rules | `---` |
 
 ## Search Field Weights

@@ -4,7 +4,7 @@ This document describes the internal architecture and design patterns used in In
 
 ## In Plain English
 
-Indoctrinate catalogs an addressable set of content, building metadata (name, tags, ingest time, source) from content material and its location. Because it scans a known directory tree, very few descriptors need to be passed at runtime — everything can be addressed using well-formed label filter sets.
+Indoctrinate catalogs an addressable set of content, building metadata (name, tags, ingest time, source) from content material and its location. Because it scans a known directory tree, very few descriptors need to be passed at runtime -- everything can be addressed using well-formed label filter sets.
 
 What this means in practice: you can auto-generate documentation for a repository without writing any configuration. If your repository has a `README.md` and a few other files (potentially with special names), a structured documentation site can be generated automatically.
 
@@ -13,7 +13,7 @@ What this means in practice: you can auto-generate documentation for a repositor
 Indoctrinate is built on the Fable **Service Provider Pattern**, with a multi-phase compilation pipeline that transforms source files into cataloged, processed, and structured output.
 
 ```
-Source Files → Scanner → Ingestor → Catalog → Processor → Output
+Source Files -> Scanner -> Ingestor -> Catalog -> Processor -> Output
                  ↓          ↓          ↓          ↓          ↓
               Discover   Describe    Store     Analyze    Generate
                files      files     & index   & enrich    output

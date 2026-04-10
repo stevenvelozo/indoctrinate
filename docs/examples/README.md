@@ -8,7 +8,7 @@ A multi-chapter book with front matter, chapters organized by number, and vocabu
 
 ```
 examples/book/
-├── indoctrinate-structure.json    ← Structure definition for a book
+├── indoctrinate-structure.json    <- Structure definition for a book
 ├── frontmatter/
 │   ├── Foreward.md
 │   └── Fish-Clipart.png

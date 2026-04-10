@@ -9,7 +9,7 @@ The Content Catalog is Indoctrinate's central store for all discovered content. 
 fable.IndoctrinateServiceCatalog
 
 // Direct access to the catalog data
-fable.AppData.SourceContentCatalog       // Object: hash → ContentDescription
+fable.AppData.SourceContentCatalog       // Object: hash -> ContentDescription
 fable.AppData.SourceContentCatalogIndices // Array: hash keys for iteration
 ```
 

@@ -41,7 +41,7 @@ The `IndoctrinateIngestor` service transforms file paths into content descriptio
 ```javascript
 // Internal flow for each discovered file
 let tmpDescription = ingestor.createContentDescriptionFromFile('/absolute/path/to/file.md');
-// → Creates a full ContentDescription with UUID, hash, labels, and optionally loaded content
+// -> Creates a full ContentDescription with UUID, hash, labels, and optionally loaded content
 ```
 
 ### MIME Type Detection
@@ -49,10 +49,10 @@ let tmpDescription = ingestor.createContentDescriptionFromFile('/absolute/path/t
 The MIME type is determined from the file extension using the `mime` library:
 
 ```javascript
-// file.md → text/markdown
-// file.json → application/json
-// file.js → application/javascript
-// file.png → image/png
+// file.md -> text/markdown
+// file.json -> application/json
+// file.js -> application/javascript
+// file.png -> image/png
 ```
 
 The MIME type is split into:

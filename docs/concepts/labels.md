@@ -180,8 +180,8 @@ Labels also enable content overriding. You can create customer-specific or envir
 For example, to customize `token_authentication.md` for a specific customer:
 
 ```
-doc/api/token_authentication.md                              ← default
-doc/api/customer_specific/ibm/token_authentication.md        ← IBM override
+doc/api/token_authentication.md                              <- default
+doc/api/customer_specific/ibm/token_authentication.md        <- IBM override
 ```
 
 Using a reverse label set match on `["customer_specific", "ibm"]`, the override file replaces the default in the generated output.
@@ -202,7 +202,7 @@ Now suppose Jane also has integration tests that document API behavior:
 /home/janedoe/Code/megalibrary/test/Integration_tests_doc_api.md
 ```
 
-The `doc` → `api` sequence does not appear in the ADDRESS labels (the file is in `test/`), but it *does* appear in the NAME labels (the filename splits to `["Integration", "tests", "doc", "api"]`). A proximal label search matches this file too. This cross-location matching is a key feature — content is matched by meaning, not just by folder.
+The `doc` -> `api` sequence does not appear in the ADDRESS labels (the file is in `test/`), but it *does* appear in the NAME labels (the filename splits to `["Integration", "tests", "doc", "api"]`). A proximal label search matches this file too. This cross-location matching is a key feature -- content is matched by meaning, not just by folder.
 
 If Jane wants *only* files directly in the `doc/api/` folder and not the integration test file, she uses a **set end match** (`OnlySetEnd: true`), which constrains the match to the end of a label set boundary.
 
@@ -211,19 +211,19 @@ If Jane wants *only* files directly in the `doc/api/` folder and not the integra
 Now suppose Jane needs to customize `token_authentication.md` for a specific customer. She creates an override:
 
 ```
-doc/api/token_authentication.md                              ← default version
-doc/api/customer_specific/ibm/token_authentication.md        ← IBM-specific version
+doc/api/token_authentication.md                              <- default version
+doc/api/customer_specific/ibm/token_authentication.md        <- IBM-specific version
 ```
 
-By adding a reverse label set match on `["customer_specific", "ibm"]` as a content override, Indoctrinate replaces the default file with the IBM-specific version in the generated output. The same structure definition works for any customer — just add a new subfolder.
+By adding a reverse label set match on `["customer_specific", "ibm"]` as a content override, Indoctrinate replaces the default file with the IBM-specific version in the generated output. The same structure definition works for any customer -- just add a new subfolder.
 
 This blend of automatic label generation, flexible matching, and content overriding means that a well-organized directory structure *is* the configuration. Indoctrinate infers the intent from the layout.
 
 ## Best Practices
 
-1. **Use meaningful directory names** — They become your primary labels automatically
-2. **Be consistent with naming** — `api-reference.md` and `api_reference.md` both produce `["api", "reference"]` labels
-3. **Leverage nesting** — Subdirectories create natural label hierarchies
-4. **Prefer proximal sequential matches** — They are the most precise filter for folder-based content
-5. **Use set end matching** — When you need non-recursive folder matching
-6. **Think in labels, not paths** — A file named `doc_api_reference.md` anywhere in the tree matches the same labels as one in `doc/api/`
+1. **Use meaningful directory names** -- They become your primary labels automatically
+2. **Be consistent with naming** -- `api-reference.md` and `api_reference.md` both produce `["api", "reference"]` labels
+3. **Leverage nesting** -- Subdirectories create natural label hierarchies
+4. **Prefer proximal sequential matches** -- They are the most precise filter for folder-based content
+5. **Use set end matching** -- When you need non-recursive folder matching
+6. **Think in labels, not paths** -- A file named `doc_api_reference.md` anywhere in the tree matches the same labels as one in `doc/api/`

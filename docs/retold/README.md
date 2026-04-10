@@ -74,14 +74,14 @@ npx indoctrinate generate_keyword_index \
 
 ```
 retold/docs/
-├── index.html                  ← Docsify entry point
-├── retold-docs-plugin.js       ← Custom plugin (route aliases, search)
-├── retold-catalog.json         ← Generated: navigation catalog
-├── retold-keyword-index.json   ← Generated: keyword search index
-├── README.md                   ← Hub homepage
-├── cover.md                    ← Landing page
-├── _sidebar.md                 ← Static fallback sidebar
-└── .nojekyll                   ← GitHub Pages config
+├── index.html                  <- Docsify entry point
+├── retold-docs-plugin.js       <- Custom plugin (route aliases, search)
+├── retold-catalog.json         <- Generated: navigation catalog
+├── retold-keyword-index.json   <- Generated: keyword search index
+├── README.md                   <- Hub homepage
+├── cover.md                    <- Landing page
+├── _sidebar.md                 <- Static fallback sidebar
+└── .nojekyll                   <- GitHub Pages config
 ```
 
 ## Module Groups
