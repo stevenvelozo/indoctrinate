@@ -4,30 +4,13 @@ Indoctrinate processes content through a multi-stage pipeline. Each stage is han
 
 ## Pipeline Stages
 
-```
-Source Files
-    ↓
-┌─────────────────────┐
-│  Input & Scanning    │  FileScanner walks directories
-│  (Phase 1)          │  Ingestor creates ContentDescriptions
-└─────────┬───────────┘
-          ↓
-┌─────────────────────┐
-│  Cataloging          │  Content stored by hash
-│  (Phase 1)          │  Labels auto-generated
-└─────────┬───────────┘
-          ↓
-┌─────────────────────┐
-│  Processing          │  ProcessingTasks run on each item
-│  (Phase 2)          │  Magic bytes, extended content
-└─────────┬───────────┘
-          ↓
-┌─────────────────────┐
-│  Output Generation   │  Structures applied
-│  (Phase 3)          │  Formatters produce files
-└─────────┬───────────┘
-          ↓
-Output Files
+```mermaid
+graph TD
+    SRC["Source Files"] --> P1A["Input & Scanning (Phase 1)<br/><i>FileScanner walks directories<br/>Ingestor creates ContentDescriptions</i>"]
+    P1A --> P1B["Cataloging (Phase 1)<br/><i>Content stored by hash<br/>Labels auto-generated</i>"]
+    P1B --> P2["Processing (Phase 2)<br/><i>ProcessingTasks run on each item<br/>Magic bytes, extended content</i>"]
+    P2 --> P3["Output Generation (Phase 3)<br/><i>Structures applied<br/>Formatters produce files</i>"]
+    P3 --> OUT["Output Files"]
 ```
 
 ## Services

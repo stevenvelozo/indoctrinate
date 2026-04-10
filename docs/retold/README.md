@@ -4,21 +4,26 @@ Indoctrinate powers the unified Retold documentation hub, which aggregates docum
 
 ## Architecture
 
-```
-Indoctrinate (local)                    Docsify Hub (browser)
-┌─────────────────────┐                ┌─────────────────────┐
-│  generate_catalog    │──→ catalog ──→│  Build route aliases │
-│  generate_keyword    │──→ index  ──→│  Build sidebar nav   │
-│    _index            │               │  Enable search       │
-└─────────────────────┘                └─────────┬───────────┘
-                                                  ↓
-                                       raw.githubusercontent.com
-                                       ┌─────────────────────┐
-                                       │  fable/docs/...      │
-                                       │  meadow/docs/...     │
-                                       │  pict/docs/...       │
-                                       │  orator/docs/...     │
-                                       └─────────────────────┘
+```mermaid
+graph LR
+    subgraph Local["Indoctrinate (local)"]
+        GC["generate_catalog"]
+        GK["generate_keyword_index"]
+    end
+    subgraph Hub["Docuserve Hub (browser)"]
+        RA["Build route aliases"]
+        SN["Build sidebar nav"]
+        SE["Enable search"]
+    end
+    subgraph GH["raw.githubusercontent.com"]
+        F["fable/docs/..."]
+        M["meadow/docs/..."]
+        P["pict/docs/..."]
+        O["orator/docs/..."]
+    end
+    GC -- "catalog" --> RA
+    GK -- "index" --> SE
+    Hub -- "fetch content" --> GH
 ```
 
 ## How It Works
