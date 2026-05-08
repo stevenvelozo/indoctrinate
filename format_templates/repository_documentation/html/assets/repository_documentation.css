@@ -1,7 +1,7 @@
 @import url('chota.css');
 
 :root {
-  --bg-color: #ffffff;
+  --bg-color: var(--theme-color-background-panel, #ffffff);
   --bg-secondary-color: #f3f3f6;
   --color-primary: #14854F;
   --color-lightGrey: #d2d6dd;
@@ -12,7 +12,7 @@
   --grid-maxWidth: 120rem;
   --grid-gutter: 2rem;
   --font-size: 1.6rem;
-  --font-color: #333333;
+  --font-color: var(--theme-color-text-primary, #333333);
   --font-family-sans: sans-serif;
   --font-family-mono: monaco, "Consolas", "Lucida Console", monospace;
 }
