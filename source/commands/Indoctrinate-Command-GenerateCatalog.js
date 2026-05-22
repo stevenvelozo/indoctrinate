@@ -27,6 +27,7 @@ class GenerateCatalog extends libCLICommandLineCommand
 		this.options.CommandOptions.push({ Name: '-g, --github_org [github_org]', Description: 'The GitHub organization or user for raw URLs.  Defaults to stevenvelozo.' });
 		this.options.CommandOptions.push({ Name: '-c, --catalog_file', Description: 'Write out the catalog Application Data file (this might be pretty big).' });
 		this.options.CommandOptions.push({ Name: '-x, --excluded_modules [excluded_modules]', Description: 'Comma-separated list of module names to exclude from the catalog (e.g. "retold-remote-desktop,retold-remote-ios").  Merged with any ExcludedModules list in the loaded config file.' });
+		this.options.CommandOptions.push({ Name: '-s, --single_module', Description: 'Treat the scan root as a single module (its docs/ folder) rather than an ecosystem of <group>/<module> repos.  The module name is read from the scan root package.json.' });
 
 		this.addCommand();
 	}

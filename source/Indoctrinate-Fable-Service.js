@@ -1,5 +1,6 @@
 const libPict = require('pict');
 const libPath = require('path');
+const libFS = require('fs');
 
 const libIndoctrinateServiceCatalog = require(`./services/catalog/Indoctrinate-Service-Catalog.js`);
 const libIndoctrinateServiceStructure = require(`./services/structure/Indoctrinate-Service-Structure.js`);
@@ -107,10 +108,53 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 				: true;
 
 		this.fable.AppData.IgnoreUnknownTypes = (typeof(this.fable.AppData.IgnoreUnknownTypes) == 'boolean') ? this.fable.AppData.IgnoreUnknownTypes
-				: (typeof(this.options.ignore_unknown) == 'boolean') ? this.options.ignore_unknown 
+				: (typeof(this.options.ignore_unknown) == 'boolean') ? this.options.ignore_unknown
 				: false;
 
+		// Single-module documentation mode: the scan root IS one module, not
+		// an ecosystem of <group>/<module> repos.  The module identity comes
+		// from the scan root's package.json.
+		this.fable.AppData.SingleModule = (typeof(this.fable.AppData.SingleModule) == 'boolean') ? this.fable.AppData.SingleModule
+				: (this.options.single_module === true) ? true
+				: (this.fable.settings.SingleModule === true) ? true
+				: false;
+		if (this.fable.AppData.SingleModule)
+		{
+			this.fable.AppData.SingleModuleName = (typeof(this.fable.AppData.SingleModuleName) == 'string' && this.fable.AppData.SingleModuleName.length > 0)
+					? this.fable.AppData.SingleModuleName
+					: this.resolveSingleModuleName(this.fable.AppData.RootFolder);
+			this.log.info(`Single-module documentation mode enabled; module name [${this.fable.AppData.SingleModuleName}].`);
+		}
+
 		return fCallback();
+	}
+
+	/**
+	 * Resolve the single-module name from the scan root's package.json,
+	 * falling back to the folder basename.
+	 *
+	 * @param {string} pRootFolder - The module's root folder
+	 * @returns {string} The module name
+	 */
+	resolveSingleModuleName(pRootFolder)
+	{
+		try
+		{
+			let tmpPackagePath = libPath.join(pRootFolder, 'package.json');
+			if (libFS.existsSync(tmpPackagePath))
+			{
+				let tmpPackage = JSON.parse(libFS.readFileSync(tmpPackagePath, 'utf8'));
+				if (tmpPackage && typeof(tmpPackage.name) == 'string' && tmpPackage.name.length > 0)
+				{
+					return tmpPackage.name;
+				}
+			}
+		}
+		catch (pError)
+		{
+			this.log.warn(`Single-module mode: could not read module name from package.json in [${pRootFolder}]: ${pError.message}`);
+		}
+		return libPath.basename(pRootFolder);
 	}
 
 	disableCatalogWrites(fCallback)
@@ -336,7 +380,9 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 				let tmpCatalogOptions = {
 					GitHubOrg: this.options.github_org || 'stevenvelozo',
 					DefaultBranch: this.options.branch || 'master',
-					ExcludedModules: this.resolveExcludedModules()
+					ExcludedModules: this.resolveExcludedModules(),
+					SingleModule: this.fable.AppData.SingleModule === true,
+					ModuleName: this.fable.AppData.SingleModuleName || ''
 				};
 
 				this.fable.IndoctrinateRetoldCatalog.buildCatalog(tmpCatalogOptions,
@@ -388,7 +434,9 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 			function (fNext)
 			{
 				let tmpKeywordIndexOptions = {
-					ExcludedModules: this.resolveExcludedModules()
+					ExcludedModules: this.resolveExcludedModules(),
+					SingleModule: this.fable.AppData.SingleModule === true,
+					ModuleName: this.fable.AppData.SingleModuleName || ''
 				};
 
 				this.fable.IndoctrinateRetoldKeywordIndex.buildKeywordIndex(tmpKeywordIndexOptions,
@@ -432,7 +480,9 @@ class IndoctrinateFableService extends libPict.ServiceProviderBase
 			function (fNext)
 			{
 				let tmpKeywordIndexOptions = {
-					ExcludedModules: this.resolveExcludedModules()
+					ExcludedModules: this.resolveExcludedModules(),
+					SingleModule: this.fable.AppData.SingleModule === true,
+					ModuleName: this.fable.AppData.SingleModuleName || ''
 				};
 
 				this.fable.IndoctrinateRetoldKeywordIndex.buildKeywordIndex(tmpKeywordIndexOptions,

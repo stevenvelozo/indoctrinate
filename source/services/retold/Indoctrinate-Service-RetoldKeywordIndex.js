@@ -205,6 +205,12 @@ class IndoctrinateRetoldKeywordIndex extends libPict.ServiceProviderBase
 			this.log.info(`Excluding ${tmpExcludedModulesSet.size} module(s) from keyword index: [${Array.from(tmpExcludedModulesSet).join(', ')}]`);
 		}
 
+		// Single-module mode: the index describes one module's docs/ folder.
+		// The index key is the docs-relative path alone (which is exactly the
+		// route docuserve fetches), not <group>/<module>/<docpath>.
+		let tmpSingleModule = (pOptions.SingleModule === true);
+		let tmpSingleModuleName = (typeof(pOptions.ModuleName) === 'string') ? pOptions.ModuleName : '';
+
 		let tmpCatalog = this.fable.AppData.SourceContentCatalog;
 
 		if (!tmpCatalog || typeof(tmpCatalog) !== 'object')
@@ -231,19 +237,8 @@ class IndoctrinateRetoldKeywordIndex extends libPict.ServiceProviderBase
 				continue;
 			}
 
-			let tmpGroupModule = this.extractGroupAndModule(tmpContentDescription);
-			if (!tmpGroupModule)
-			{
-				continue;
-			}
-
-			// Skip any excluded modules — they never enter the search index
-			if (tmpExcludedModulesSet.has(tmpGroupModule.Module))
-			{
-				tmpSkippedCount++;
-				continue;
-			}
-
+			// The docs-relative path is computed the same way in both modes;
+			// a file not under a docs/ folder yields null and is skipped.
 			let tmpDocPath = this.extractDocRelativePath(tmpContentDescription);
 			if (!tmpDocPath)
 			{
@@ -256,7 +251,34 @@ class IndoctrinateRetoldKeywordIndex extends libPict.ServiceProviderBase
 				continue;
 			}
 
-			let tmpDocKey = `${tmpGroupModule.Group}/${tmpGroupModule.Module}/${tmpDocPath}`;
+			let tmpGroup;
+			let tmpModule;
+			let tmpDocKey;
+			if (tmpSingleModule)
+			{
+				// One module: the key is the docs-relative path alone.
+				tmpGroup = '';
+				tmpModule = tmpSingleModuleName;
+				tmpDocKey = tmpDocPath;
+			}
+			else
+			{
+				// Ecosystem: derive <group>/<module> from the path segments.
+				let tmpGroupModule = this.extractGroupAndModule(tmpContentDescription);
+				if (!tmpGroupModule)
+				{
+					continue;
+				}
+				// Skip any excluded modules — they never enter the search index
+				if (tmpExcludedModulesSet.has(tmpGroupModule.Module))
+				{
+					tmpSkippedCount++;
+					continue;
+				}
+				tmpGroup = tmpGroupModule.Group;
+				tmpModule = tmpGroupModule.Module;
+				tmpDocKey = `${tmpGroup}/${tmpModule}/${tmpDocPath}`;
+			}
 
 			// Strip markdown for indexing
 			let tmpPlainText = this.stripMarkdown(tmpContentDescription.Content);
@@ -267,16 +289,16 @@ class IndoctrinateRetoldKeywordIndex extends libPict.ServiceProviderBase
 
 			tmpDocuments[tmpDocKey] = {
 				Title: tmpTitle,
-				Module: tmpGroupModule.Module,
-				Group: tmpGroupModule.Group,
+				Module: tmpModule,
+				Group: tmpGroup,
 				DocPath: tmpDocPath
 			};
 
 			tmpLunrDocs.push({
 				id: tmpDocKey,
 				title: tmpTitle,
-				module: tmpGroupModule.Module,
-				group: tmpGroupModule.Group,
+				module: tmpModule,
+				group: tmpGroup,
 				body: tmpPlainText
 			});
 		}
@@ -301,6 +323,7 @@ class IndoctrinateRetoldKeywordIndex extends libPict.ServiceProviderBase
 
 		let tmpResult = {
 			Generated: new Date().toISOString(),
+			Mode: tmpSingleModule ? 'module' : 'ecosystem',
 			DocumentCount: tmpLunrDocs.length,
 			LunrIndex: tmpIndex.toJSON(),
 			Documents: tmpDocuments

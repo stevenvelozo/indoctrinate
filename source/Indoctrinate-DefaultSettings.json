@@ -7,7 +7,7 @@
 
 	"ProgramConfigurationFileName": ".indoctrinate.config.json",
 
-	"IgnoredFileNames": ["node_modules", ".git", ".DS_Store", ".nyc_output"],
+	"IgnoredFileNames": ["node_modules", ".git", ".DS_Store", ".nyc_output", "dist", "build", "coverage", "out", "tmp"],
 
 	"ExcludedModules": [],
 

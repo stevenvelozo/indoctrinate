@@ -303,6 +303,13 @@ class IndoctrinateRetoldCatalog extends libPict.ServiceProviderBase
 	 */
 	buildCatalog(pOptions, fCallback)
 	{
+		// Single-module mode produces a one-module catalog rather than the
+		// ecosystem <group>/<module> tree.
+		if (pOptions && pOptions.SingleModule === true)
+		{
+			return this.buildSingleModuleCatalog(pOptions, fCallback);
+		}
+
 		let tmpGitHubOrg = (pOptions && pOptions.GitHubOrg) ? pOptions.GitHubOrg : 'stevenvelozo';
 		let tmpDefaultBranch = (pOptions && pOptions.DefaultBranch) ? pOptions.DefaultBranch : 'master';
 
@@ -461,6 +468,7 @@ class IndoctrinateRetoldCatalog extends libPict.ServiceProviderBase
 
 		let tmpResult = {
 			Generated: new Date().toISOString(),
+			Mode: 'ecosystem',
 			GitHubOrg: tmpGitHubOrg,
 			DefaultBranch: tmpDefaultBranch,
 			Groups: tmpGroups
@@ -474,6 +482,83 @@ class IndoctrinateRetoldCatalog extends libPict.ServiceProviderBase
 		{
 			this.log.info(`Catalog built: ${tmpGroups.length} groups, ${tmpModuleKeys.length} modules discovered.`);
 		}
+
+		return fCallback(null, tmpResult);
+	}
+
+	/**
+	 * Build a single-module catalog — one module describing the scanned
+	 * module's own docs/ folder, with no spurious groups derived from the
+	 * module's other subfolders (dist/, source/, test/, …).
+	 *
+	 * @param {object} pOptions - { GitHubOrg, DefaultBranch, ModuleName }
+	 * @param {function} fCallback - Callback(error, catalog)
+	 */
+	buildSingleModuleCatalog(pOptions, fCallback)
+	{
+		let tmpGitHubOrg = (pOptions && pOptions.GitHubOrg) ? pOptions.GitHubOrg : 'stevenvelozo';
+		let tmpDefaultBranch = (pOptions && pOptions.DefaultBranch) ? pOptions.DefaultBranch : 'master';
+		let tmpModuleName = (pOptions && typeof(pOptions.ModuleName) === 'string' && pOptions.ModuleName.length > 0) ? pOptions.ModuleName : 'module';
+
+		let tmpCatalog = this.fable.AppData.SourceContentCatalog;
+		if (!tmpCatalog || typeof(tmpCatalog) !== 'object')
+		{
+			this.log.error('No source content catalog found in AppData. Run a compile first.');
+			return fCallback(new Error('No source content catalog available'));
+		}
+		let tmpCatalogIndices = this.fable.AppData.SourceContentCatalogIndices || Object.keys(tmpCatalog);
+
+		let tmpModule = {
+			Name: tmpModuleName,
+			Repo: tmpModuleName,
+			Group: '',
+			Branch: tmpDefaultBranch,
+			HasDocs: false,
+			HasCover: false,
+			Sidebar: [],
+			DocFiles: []
+		};
+		let tmpSidebarContent = null;
+
+		for (let i = 0; i < tmpCatalogIndices.length; i++)
+		{
+			let tmpContentDescription = tmpCatalog[tmpCatalogIndices[i]];
+
+			// Only files under a docs/ folder belong in the catalog.
+			let tmpDocRelativePath = this.extractDocRelativePath(tmpContentDescription);
+			if (tmpDocRelativePath === null)
+			{
+				continue;
+			}
+
+			tmpModule.HasDocs = true;
+			tmpModule.DocFiles.push(tmpDocRelativePath);
+
+			if (tmpContentDescription.Name === '_sidebar.md' && typeof(tmpContentDescription.Content) === 'string')
+			{
+				tmpSidebarContent = tmpContentDescription.Content;
+			}
+			if (tmpContentDescription.Name === 'cover.md' || tmpContentDescription.Name === '_cover.md')
+			{
+				tmpModule.HasCover = true;
+			}
+		}
+
+		if (tmpSidebarContent)
+		{
+			tmpModule.Sidebar = this.parseSidebar(tmpSidebarContent);
+		}
+
+		let tmpResult = {
+			Generated: new Date().toISOString(),
+			Mode: 'module',
+			GitHubOrg: tmpGitHubOrg,
+			DefaultBranch: tmpDefaultBranch,
+			Module: tmpModule,
+			Groups: []
+		};
+
+		this.log.info(`Single-module catalog built for [${tmpModuleName}]: ${tmpModule.DocFiles.length} documentation file(s).`);
 
 		return fCallback(null, tmpResult);
 	}
