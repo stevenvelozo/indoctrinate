@@ -26,6 +26,6 @@ graph TD
 
 ## Detailed Stage Documentation
 
-- [Input & Scanning](pipeline/input.md) - File discovery, content description creation, and label generation
-- [Processing Tasks](pipeline/processing.md) - Content analysis and enrichment
-- [Output & Formatting](pipeline/output.md) - Structure-driven output generation
+- [Input & Scanning](input.md) - File discovery, content description creation, and label generation
+- [Processing Tasks](processing.md) - Content analysis and enrichment
+- [Output & Formatting](output.md) - Structure-driven output generation

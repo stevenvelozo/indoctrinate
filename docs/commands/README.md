@@ -6,10 +6,10 @@ Indoctrinate provides four commands for different workflows. All commands are ru
 
 | Command | Description |
 |---------|-------------|
-| [`compile`](commands/compile.md) | Full content compilation from source directories |
-| [`extended_process`](commands/extended-process.md) | Re-process content from a saved catalog |
-| [`generate_catalog`](commands/generate-catalog.md) | Build a Retold documentation catalog |
-| [`generate_keyword_index`](commands/generate-keyword-index.md) | Build a keyword search index |
+| [`compile`](compile.md) | Full content compilation from source directories |
+| [`extended_process`](extended-process.md) | Re-process content from a saved catalog |
+| [`generate_catalog`](generate-catalog.md) | Build a Retold documentation catalog |
+| [`generate_keyword_index`](generate-keyword-index.md) | Build a keyword search index |
 
 ## Usage
 

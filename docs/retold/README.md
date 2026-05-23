@@ -98,5 +98,5 @@ The catalog organizes modules into five groups:
 
 ## Further Reading
 
-- [Catalog Generation](retold/catalog-generation.md) - Details on catalog structure and sidebar parsing
-- [Keyword Index](retold/keyword-index.md) - Details on search index building and lunr integration
+- [Catalog Generation](catalog-generation.md) - Details on catalog structure and sidebar parsing
+- [Keyword Index](keyword-index.md) - Details on search index building and lunr integration

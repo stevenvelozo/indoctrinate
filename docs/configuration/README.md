@@ -43,5 +43,5 @@ Settings are resolved in this order (first match wins):
 
 ## Further Configuration
 
-- [Special Files](configuration/special-files.md) - Directive files that customize behavior
-- [Structures & Targets](configuration/structures-targets.md) - Defining output structures
+- [Special Files](special-files.md) - Directive files that customize behavior
+- [Structures & Targets](structures-targets.md) - Defining output structures

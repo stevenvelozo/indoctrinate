@@ -1,5 +1,7 @@
 # Indoctrinate
 
+> **[&#9654; Read the Indoctrinate Documentation](https://stevenvelozo.github.io/indoctrinate/)** &mdash; interactive docs with the full API reference.
+
 A simple documentation scaffolding (sub)system.
 
 ## Vocabulary

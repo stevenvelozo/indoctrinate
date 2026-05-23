@@ -66,7 +66,7 @@ Select content by special schema identifier:
 
 ### Label Filter
 
-The most powerful filter type. See [Labels](concepts/labels.md) for full details on matching algorithms.
+The most powerful filter type. See [Labels](labels.md) for full details on matching algorithms.
 
 ```javascript
 // Match any of these labels
