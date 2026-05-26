@@ -22,7 +22,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/stevenvelozo/indoctrinate.git"
+        "url": "git+https://github.com/fable-retold/indoctrinate.git"
     },
     "keywords": [
         "documentation"
@@ -30,9 +30,9 @@
     "author": "steven velozo <steven@velozo.com>",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/stevenvelozo/indoctrinate/issues"
+        "url": "https://github.com/fable-retold/indoctrinate/issues"
     },
-    "homepage": "https://github.com/stevenvelozo/indoctrinate#readme",
+    "homepage": "https://github.com/fable-retold/indoctrinate#readme",
     "mocha": {
         "diff": true,
         "extension": [

@@ -1,6 +1,6 @@
 # Indoctrinate
 
-> **[&#9654; Read the Indoctrinate Documentation](https://stevenvelozo.github.io/indoctrinate/)** &mdash; interactive docs with the full API reference.
+> **[&#9654; Read the Indoctrinate Documentation](https://fable-retold.github.io/indoctrinate/)** &mdash; interactive docs with the full API reference.
 
 A simple documentation scaffolding (sub)system.
 
@@ -50,7 +50,7 @@ https://www.npmjs.com/package/hash-wasm
 
 ## Related Packages
 
-- [fable](https://github.com/stevenvelozo/fable) - Application services framework
+- [fable](https://github.com/fable-retold/fable) - Application services framework
 
 ## License
 

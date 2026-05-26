@@ -72,7 +72,7 @@ Content flows through a multi-phase pipeline: scanning and ingestion, cataloging
 
 ## Related Packages
 
-- [fable](https://github.com/stevenvelozo/fable) - Core framework providing dependency injection
-- [pict-service-commandlineutility](https://github.com/stevenvelozo/pict-service-commandlineutility) - CLI framework
-- [manyfest](https://github.com/stevenvelozo/manyfest) - Manifest management
-- [quackage](https://github.com/stevenvelozo/quackage) - Build tooling
+- [fable](https://github.com/fable-retold/fable) - Core framework providing dependency injection
+- [pict-service-commandlineutility](https://github.com/fable-retold/pict-service-commandlineutility) - CLI framework
+- [manyfest](https://github.com/fable-retold/manyfest) - Manifest management
+- [quackage](https://github.com/fable-retold/quackage) - Build tooling

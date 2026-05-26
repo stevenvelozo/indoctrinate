@@ -7,5 +7,5 @@
 - Multi-phase compilation pipeline with extensible processing tasks
 - Unified documentation hub generation for multi-repo projects
 
-[GitHub](https://github.com/stevenvelozo/indoctrinate)
+[GitHub](https://github.com/fable-retold/indoctrinate)
 [Get Started](#indoctrinate)
