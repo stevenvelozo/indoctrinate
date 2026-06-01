@@ -120,4 +120,4 @@ The Docsify hub plugin transforms catalog entries into route aliases:
 '/fable/fable-log/(.*)' -> 'https://raw.githubusercontent.com/stevenvelozo/fable-log/master/docs/$1'
 ```
 
-This means the URL `/#/fable/fable-log/getting-started.md` seamlessly fetches from GitHub.
+This means the URL `/#/fable/fable-log/getting-started.md` smoothly fetches from GitHub.

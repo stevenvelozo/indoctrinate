@@ -223,7 +223,7 @@ This blend of automatic label generation, flexible matching, and content overrid
 
 1. **Use meaningful directory names** -- They become your primary labels automatically
 2. **Be consistent with naming** -- `api-reference.md` and `api_reference.md` both produce `["api", "reference"]` labels
-3. **Leverage nesting** -- Subdirectories create natural label hierarchies
+3. **Use nesting** -- Subdirectories create natural label hierarchies
 4. **Prefer proximal sequential matches** -- They are the most precise filter for folder-based content
 5. **Use set end matching** -- When you need non-recursive folder matching
 6. **Think in labels, not paths** -- A file named `doc_api_reference.md` anywhere in the tree matches the same labels as one in `doc/api/`

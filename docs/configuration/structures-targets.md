@@ -129,5 +129,5 @@ Two targets produce different formats from the same structure.
 1. **Use hash identifiers** that are descriptive and unique
 2. **Match structures to document types** - One structure per kind of document
 3. **Use multiple targets** to produce the same document in different formats
-4. **Leverage label filters** in sections for automatic content selection
+4. **Use label filters** in sections for automatic content selection
 5. **Keep sections ordered** in the structure to control document flow

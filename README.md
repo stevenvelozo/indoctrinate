@@ -1,6 +1,6 @@
 # Indoctrinate
 
-> **[&#9654; Read the Indoctrinate Documentation](https://fable-retold.github.io/indoctrinate/)** &mdash; interactive docs with the full API reference.
+> **[Read the Indoctrinate Documentation](https://fable-retold.github.io/indoctrinate/)** - interactive docs with the full API reference.
 
 A simple documentation scaffolding (sub)system.
 
