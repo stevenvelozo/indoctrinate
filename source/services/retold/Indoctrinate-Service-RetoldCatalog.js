@@ -170,6 +170,14 @@ class IndoctrinateRetoldCatalog extends libPict.ServiceProviderBase
 	/**
 	 * Normalize sidebar paths — convert `/` to `README.md`, strip leading slashes
 	 *
+	 * Document paths are docs-relative (`quickstart.md`, `services/`), so a bare
+	 * `/` or a trailing-slash folder reference resolves to that folder's
+	 * `README.md`. External and non-document links (absolute or protocol-relative
+	 * URLs, in-page anchors, `mailto:`/`tel:`) are navigation targets verbatim and
+	 * must pass through untouched — appending `README.md` to a docs-site URL like
+	 * `https://fable-retold.github.io/pict/` is what turned the Retold Ecosystem
+	 * links into dead `.../pict/README.md` pages.
+	 *
 	 * @param {string} pPath - Raw path from sidebar link
 	 * @returns {string} Normalized path
 	 */
@@ -178,6 +186,12 @@ class IndoctrinateRetoldCatalog extends libPict.ServiceProviderBase
 		if (!pPath || pPath === '/')
 		{
 			return 'README.md';
+		}
+
+		// External / non-document links: keep exactly as authored.
+		if (/^(?:[a-z][a-z0-9+.\-]*:\/\/|\/\/|mailto:|tel:|#)/i.test(pPath))
+		{
+			return pPath;
 		}
 
 		// Strip leading slash

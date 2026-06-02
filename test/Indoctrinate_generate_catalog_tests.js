@@ -118,6 +118,16 @@ suite
 						// Normal paths unchanged
 						Expect(tmpRetoldCatalog.normalizeSidebarPath('getting-started.md')).to.equal('getting-started.md');
 
+						// External / non-document links pass through verbatim -- never
+						// get README.md appended (a trailing-slash docs-site URL would
+						// otherwise become a dead `.../README.md` page) or a leading
+						// slash stripped.
+						Expect(tmpRetoldCatalog.normalizeSidebarPath('https://fable-retold.github.io/pict/')).to.equal('https://fable-retold.github.io/pict/');
+						Expect(tmpRetoldCatalog.normalizeSidebarPath('https://fable-retold.github.io/pict')).to.equal('https://fable-retold.github.io/pict');
+						Expect(tmpRetoldCatalog.normalizeSidebarPath('//cdn.example.com/x/')).to.equal('//cdn.example.com/x/');
+						Expect(tmpRetoldCatalog.normalizeSidebarPath('mailto:steven@velozo.com')).to.equal('mailto:steven@velozo.com');
+						Expect(tmpRetoldCatalog.normalizeSidebarPath('#anchor')).to.equal('#anchor');
+
 						return fNext();
 					}
 				);
