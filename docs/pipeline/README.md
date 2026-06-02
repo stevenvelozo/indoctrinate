@@ -4,14 +4,8 @@ Indoctrinate processes content through a multi-stage pipeline. Each stage is han
 
 ## Pipeline Stages
 
-```mermaid
-graph TD
-    SRC["Source Files"] --> P1A["Input & Scanning (Phase 1)<br/><i>FileScanner walks directories<br/>Ingestor creates ContentDescriptions</i>"]
-    P1A --> P1B["Cataloging (Phase 1)<br/><i>Content stored by hash<br/>Labels auto-generated</i>"]
-    P1B --> P2["Processing (Phase 2)<br/><i>ProcessingTasks run on each item<br/>Magic bytes, extended content</i>"]
-    P2 --> P3["Output Generation (Phase 3)<br/><i>Structures applied<br/>Formatters produce files</i>"]
-    P3 --> OUT["Output Files"]
-```
+<!-- bespoke diagram: edit diagrams/pipeline-stages.mmd or .hints.json, then: npx pict-renderer-graph build modules/utility/indoctrinate/docs/pipeline -->
+![Pipeline Stages](diagrams/pipeline-stages.svg)
 
 ## Services
 

@@ -4,27 +4,8 @@ Indoctrinate powers the unified Retold documentation hub, which aggregates docum
 
 ## Architecture
 
-```mermaid
-graph LR
-    subgraph Local["Indoctrinate (local)"]
-        GC["generate_catalog"]
-        GK["generate_keyword_index"]
-    end
-    subgraph Hub["Docuserve Hub (browser)"]
-        RA["Build route aliases"]
-        SN["Build sidebar nav"]
-        SE["Enable search"]
-    end
-    subgraph GH["raw.githubusercontent.com"]
-        F["fable/docs/..."]
-        M["meadow/docs/..."]
-        P["pict/docs/..."]
-        O["orator/docs/..."]
-    end
-    GC -- "catalog" --> RA
-    GK -- "index" --> SE
-    Hub -- "fetch content" --> GH
-```
+<!-- bespoke diagram: edit diagrams/architecture.mmd or .hints.json, then: npx pict-renderer-graph build modules/utility/indoctrinate/docs/retold -->
+![Architecture](diagrams/architecture.svg)
 
 ## How It Works
 
