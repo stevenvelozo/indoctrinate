@@ -23,15 +23,8 @@ When discovered during scanning, each path is added to the additional scan folde
 
 ### Example
 
-```
-my-project/
-├── docs/
-│   ├── indoctrinate-extrafolders.json
-│   └── README.md
-├── src/
-└── shared/
-    └── common-docs/
-```
+<!-- bespoke diagram: edit diagrams/example.mmd or .hints.json, then: npx pict-renderer-graph build modules/utility/indoctrinate/docs/configuration -->
+![Example](diagrams/example.svg)
 
 ```json
 ["../shared/common-docs"]

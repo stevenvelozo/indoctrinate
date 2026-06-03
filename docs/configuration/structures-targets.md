@@ -104,19 +104,8 @@ npx indoctrinate compile --target_filter html-target
 
 ## Example: Book Project
 
-```
-my-book/
-├── indoctrinate-structure-book.json
-├── indoctrinate-target-markdown.json
-├── indoctrinate-target-html.json
-├── frontmatter/
-│   ├── Foreword.md
-│   └── cover.png
-└── chapters/
-    ├── 01/000-Introduction.md
-    ├── 02/000-GettingStarted.md
-    └── 03/000-AdvancedTopics.md
-```
+<!-- bespoke diagram: edit diagrams/example-book-project.mmd or .hints.json, then: npx pict-renderer-graph build modules/utility/indoctrinate/docs/configuration -->
+![Example: Book Project](diagrams/example-book-project.svg)
 
 The structure selects content by label matching:
 - Front matter from the `frontmatter/` folder

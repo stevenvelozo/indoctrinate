@@ -12,14 +12,8 @@ fable.IndoctrinateRetoldCatalog
 
 Indoctrinate discovers modules by analyzing the `__LABELSET_ADDRESS` labels of cataloged content. In a directory structure like:
 
-```
-modules/
-├── fable/
-│   └── fable-log/
-│       └── docs/
-│           ├── _sidebar.md
-│           └── README.md
-```
+<!-- bespoke diagram: edit diagrams/module-discovery.mmd or .hints.json, then: npx pict-renderer-graph build modules/utility/indoctrinate/docs/retold -->
+![Module Discovery](diagrams/module-discovery.svg)
 
 A file's address labels would be `["fable", "fable-log", "docs"]`. The first label is the group name, the second is the module name.
 

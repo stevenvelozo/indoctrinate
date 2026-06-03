@@ -23,21 +23,8 @@ Source Files -> Scanner -> Ingestor -> Catalog -> Processor -> Output
 
 The system is composed of seven Fable services orchestrated by the main `IndoctrinateFableService`:
 
-```
-IndoctrinateFableService (Orchestrator)
-    ├── IndoctrinateServiceInput       (Scanning & Ingestion)
-    │     ├── IndoctrinateFileScanner  (File system traversal)
-    │     └── IndoctrinateIngestor     (Content description creation)
-    ├── IndoctrinateServiceCatalog     (Content storage & filtering)
-    ├── IndoctrinateServiceStructure   (Output structure definitions)
-    ├── IndoctrinateServiceProcessor   (Content processing tasks)
-    │     └── UnderstandFile           (Magic byte detection)
-    ├── IndoctrinateServiceOutput      (Output generation)
-    │     ├── OutputFormatter          (File generation)
-    │     └── OutputPart              (Content part assembly)
-    ├── IndoctrinateRetoldCatalog      (Retold doc catalog builder)
-    └── IndoctrinateRetoldKeywordIndex (Keyword search index builder)
-```
+<!-- bespoke diagram: edit diagrams/service-architecture.mmd or .hints.json, then: npx pict-renderer-graph build modules/utility/indoctrinate/docs -->
+![Service Architecture](diagrams/service-architecture.svg)
 
 ## Compilation Phases
 

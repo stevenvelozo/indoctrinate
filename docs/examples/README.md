@@ -6,23 +6,8 @@ Indoctrinate includes several example projects demonstrating different use cases
 
 A multi-chapter book with front matter, chapters organized by number, and vocabulary definitions.
 
-```
-examples/book/
-├── indoctrinate-structure.json    <- Structure definition for a book
-├── frontmatter/
-│   ├── Foreward.md
-│   └── Fish-Clipart.png
-├── chapters/
-│   ├── 01/000-Fish.md
-│   ├── 02/000-FreshwaterFish.md
-│   ├── 02/Salmon.md
-│   ├── 03/000-SaltwaterFish.md
-│   ├── 04/000-FishThatWorkInBoth.md
-│   ├── 05/000-FishAsFood.md
-│   └── 06/000-FishAsFriends.md
-├── README.md
-└── Vocabulary.md
-```
+<!-- bespoke diagram: edit diagrams/book-example.mmd or .hints.json, then: npx pict-renderer-graph build modules/utility/indoctrinate/docs/examples -->
+![Book Example](diagrams/book-example.svg)
 
 The structure file defines sections with label filters that select content from the `frontmatter/` and `chapters/` folders automatically.
 
@@ -30,22 +15,8 @@ The structure file defines sections with label filters that select content from 
 
 Documentation for a data model with entities organized by category.
 
-```
-examples/data_model/
-├── indoctrinate.json
-├── Platform.md
-└── model/
-    ├── MeadowModel-Extended.json
-    ├── entity/
-    │   ├── animals/
-    │   │   ├── Author.md
-    │   │   └── Cat.md
-    │   └── clinics/
-    │       ├── Book.md
-    │       └── Vet.md
-    └── entity_abstractions/
-        └── animals.md
-```
+<!-- bespoke diagram: edit diagrams/data-model-example.mmd or .hints.json, then: npx pict-renderer-graph build modules/utility/indoctrinate/docs/examples -->
+![Data Model Example](diagrams/data-model-example.svg)
 
 This demonstrates how Indoctrinate catalogs JSON data models alongside markdown documentation, with labels that distinguish entities, abstractions, and platform documentation.
 
@@ -53,12 +24,8 @@ This demonstrates how Indoctrinate catalogs JSON data models alongside markdown 
 
 A simple document with an introduction and body.
 
-```
-examples/document/
-├── indoctrinate.json
-├── Introduction.md
-└── Body.md
-```
+<!-- bespoke diagram: edit diagrams/document-example.mmd or .hints.json, then: npx pict-renderer-graph build modules/utility/indoctrinate/docs/examples -->
+![Document Example](diagrams/document-example.svg)
 
 ## Monorepo Example
 

@@ -82,18 +82,8 @@ npx indoctrinate generate_catalog -d ./modules -g myorg -b main
 
 The command expects modules organized as:
 
-```
-modules/
-├── fable/
-│   ├── fable/docs/...
-│   ├── fable-log/docs/...
-│   └── fable-uuid/docs/...
-├── meadow/
-│   ├── meadow/docs/...
-│   └── foxhound/docs/...
-└── pict/
-    └── pict/docs/...
-```
+<!-- bespoke diagram: edit diagrams/expected-directory-structure.mmd or .hints.json, then: npx pict-renderer-graph build modules/utility/indoctrinate/docs/commands -->
+![Expected Directory Structure](diagrams/expected-directory-structure.svg)
 
 The first directory level is the group name, the second is the module name.
 

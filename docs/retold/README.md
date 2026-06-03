@@ -53,17 +53,8 @@ npx indoctrinate generate_keyword_index \
 
 ## Hub File Layout
 
-```
-retold/docs/
-├── index.html                  <- Docsify entry point
-├── retold-docs-plugin.js       <- Custom plugin (route aliases, search)
-├── retold-catalog.json         <- Generated: navigation catalog
-├── retold-keyword-index.json   <- Generated: keyword search index
-├── README.md                   <- Hub homepage
-├── cover.md                    <- Landing page
-├── _sidebar.md                 <- Static fallback sidebar
-└── .nojekyll                   <- GitHub Pages config
-```
+<!-- bespoke diagram: edit diagrams/hub-file-layout.mmd or .hints.json, then: npx pict-renderer-graph build modules/utility/indoctrinate/docs/retold -->
+![Hub File Layout](diagrams/hub-file-layout.svg)
 
 ## Module Groups
 
